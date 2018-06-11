@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">DyslexReader</string>
+
+    <!-- MAIN ACTIVITY  -->
+    <string name="btnReaderLabel">Read</string>
+    <string name="btnFileLabel">Read</string>
+    <string name="btnCameraLabel">Read</string>
+    <string name="btnPasteLabel">Paste</string>
+    <string name="btnSettingsLabel">Paste</string>
+
+    <!-- READER ACTIVITY  -->
+    <string name="btnNextWordLabel">Prox. Palavra</string>
+    <string name="btnPreviousWordLabel">Palavra Ant.</string>
+    <string name="btnAnalyzeWordLabel">Analyzre</string>
+
+    <!-- ANALYSIS ACTIVITY  -->
+    <string name="btnPronunciationLabel">Analyzre</string>
+
+
+</resources>
