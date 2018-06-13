@@ -12,10 +12,10 @@
     <!-- READER ACTIVITY  -->
     <string name="btnNextWordLabel">Prox. Palavra</string>
     <string name="btnPreviousWordLabel">Palavra Ant.</string>
-    <string name="btnAnalyzeWordLabel">Analyzre</string>
+    <string name="btnAnalyzeWordLabel">Analyze</string>
 
     <!-- ANALYSIS ACTIVITY  -->
-    <string name="btnPronunciationLabel">Analyze</string>
+    <string name="btnPronunciationLabel">Play sound</string>
     <string name="file">FILE</string>
 
 

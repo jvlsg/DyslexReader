@@ -36,12 +36,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /**
+         * O textView será muito usado, então já coloca ele aqui
+         */
         tvPreview = (TextView)findViewById(R.id.tvPreview);
     }
 
 
     /***
      * Button Callback for btnReader
+     * Pega a string da caixa e manda pra nova Activity
      */
     public void onClickReader(View v){
         String text;
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     /***
      * Button Callback for btnFile
+     * Abre o gerenciador de arquivos, mas ainda não faz nada se selecionar o arquivo
      */
     public void onClickFile(View v){
         Intent intent = new Intent();
@@ -64,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
     /***
      * Button Callback for btnPaste
+     * Pega o texto do clip board. Se tiver algo, coloca na caixa
+     * Caso contrário, faz nada
      */
     public void onClickPaste(View v){
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
