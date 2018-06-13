@@ -27,6 +27,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:onClick="nextWord"
         android:text="@string/btnNextWordLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pbReadingProgress" />
@@ -38,6 +39,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:onClick="previousWord"
         android:text="@string/btnPreviousWordLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pbReadingProgress" />
@@ -62,6 +64,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:onClick="onClickAnalyze"
         android:text="@string/btnAnalyzeWordLabel"
         app:layout_constraintEnd_toStartOf="@+id/btnNextWord"
         app:layout_constraintStart_toEndOf="@+id/btnPreviousWord"
