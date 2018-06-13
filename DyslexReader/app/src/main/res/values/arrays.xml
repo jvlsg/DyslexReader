@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- SETTINGS ACTIVITY -->
     <array name="readingModes">
         <item>@string/readingModeLabelHighlight</item>
         <item>@string/readingModeLabelWordByWord</item>
@@ -8,4 +10,18 @@
         <item>@string/readingModeValueHighlight</item>
         <item>@string/readingModeValueWordByWord</item>
     </array>
+
+
+    <array name="themes">
+        <item>@string/themeLabelLight</item>
+        <item>@string/themeLabelDark</item>
+        <item>@string/themeLabelCustom</item>
+    </array>
+    <array name="entryValuesThemes">
+        <item>@string/themeValueLight</item>
+        <item>@string/themeValueDark</item>
+        <item>@string/themeValueCustom</item>
+    </array>
+
+
 </resources>

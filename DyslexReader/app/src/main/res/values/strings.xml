@@ -18,21 +18,34 @@
 
     <!-- SETTINGS ACTIVITY -->
     <string name="settingsLabel">Settings</string>
-    
+
+    <string name="whiteNoiseKey" translatable="false">whiteNoise</string>
     <string name="whiteNoiseTitle">Play White Noise</string>
     <string name="whiteNoiseSummary">Plays White Noise to reduce noise distractions</string>
-    
+
+    <string name="firstLastColorsKey" translatable="false">firstLastColors</string>
     <string name="firstLastColorsTitle">Change prefix suffix color</string>
     <string name="firstLastColorsSummary">Changes color of first and last letters</string>
 
+    <string name="readingModeKey" translatable="false">readingMode</string>
     <string name="readingModeTitle">Reading Mode</string>
     <string name="readingModeSummary">Choose Reading mode</string>
     <string name="readingModeDialog">Choose Reading mode</string>
-
     <string name="readingModeLabelHighlight">Highlight</string>
     <string name="readingModeLabelWordByWord">Word By Word</string>
+    <string name="readingModeValueHighlight" translatable="false">highlight</string>
+    <string name="readingModeValueWordByWord" translatable="false">wordByWord</string>
 
-    <string name="readingModeValueHighlight">highlight</string>
-    <string name="readingModeValueWordByWord">wordByWord</string>
+    <string name="themeKey" translatable="false">theme</string>
+    <string name="themeTitle">Theme</string>
+    <string name="themeSummary">Change the visual appearance</string>
+    <string name="themeDialog">Choose Your theme</string>
+    <string name="themeLabelLight">Light</string>
+    <string name="themeLabelDark">Dark</string>
+    <string name="themeLabelCustom">Custom</string>
+    <string name="themeValueLight" translatable="false">light</string>
+    <string name="themeValueDark" translatable="false">dark</string>
+    <string name="themeValueCustom" translatable="false">custom</string>
+
 
 </resources>

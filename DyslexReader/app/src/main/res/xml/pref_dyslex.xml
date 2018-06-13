@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
     <SwitchPreference
-        android:key="switchWhiteNoise"
+        android:key="@string/whiteNoiseKey"
         android:title="@string/whiteNoiseTitle"
         android:summary="@string/whiteNoiseSummary"
+        android:defaultValue="false"
         />
 
     <SwitchPreference
-        android:key="switchFirstLastColors"
+        android:key="@string/firstLastColorsKey"
         android:title="@string/firstLastColorsTitle"
         android:summary="@string/firstLastColorsSummary"
+        android:defaultValue="false"
         />
 
     <ListPreference
-        android:key="listReadingMode"
+        android:key="@string/readingModeKey"
         android:title="@string/readingModeTitle"
         android:summary="@string/readingModeSummary"
         android:entries="@array/readingModes"
         android:entryValues="@array/entryValuesReadingModes"
-        android:dialogTitle="@string/readingModeDialog" />
+        android:dialogTitle="@string/readingModeDialog"
+        android:defaultValue="@string/readingModeValueHighlight"/>
+
+    <ListPreference
+        android:key="@string/themeKey"
+        android:title="@string/themeTitle"
+        android:summary="@string/themeSummary"
+        android:entries="@array/themes"
+        android:entryValues="@array/entryValuesThemes"
+        android:dialogTitle="@string/themeDialog"
+        android:defaultValue="@string/themeValueLight"
+        />
+
+
 
 </PreferenceScreen>
