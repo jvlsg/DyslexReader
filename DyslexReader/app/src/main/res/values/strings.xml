@@ -3,18 +3,20 @@
 
     <!-- MAIN ACTIVITY  -->
     <string name="btnReaderLabel">Read</string>
-    <string name="btnFileLabel">Read</string>
-    <string name="btnCameraLabel">Read</string>
+    <string name="btnFileLabel">File</string>
+    <string name="btnCameraLabel">Camera</string>
     <string name="btnPasteLabel">Paste</string>
-    <string name="btnSettingsLabel">Paste</string>
+    <string name="btnSettingsLabel">Settings</string>
+    <string name="tvPreviewHint">This window will show the text that will be modified.</string>
 
     <!-- READER ACTIVITY  -->
     <string name="btnNextWordLabel">Prox. Palavra</string>
     <string name="btnPreviousWordLabel">Palavra Ant.</string>
-    <string name="btnAnalyzeWordLabel">Analyzre</string>
+    <string name="btnAnalyzeWordLabel">Analyze</string>
 
     <!-- ANALYSIS ACTIVITY  -->
-    <string name="btnPronunciationLabel">Analyzre</string>
+    <string name="btnPronunciationLabel">Play sound</string>
+    <string name="file">FILE</string>
 
     <!-- SETTINGS ACTIVITY -->
     <string name="settingsLabel">Settings</string>
