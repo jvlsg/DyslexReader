@@ -49,5 +49,7 @@
     <string name="themeValueDark" translatable="false">dark</string>
     <string name="themeValueCustom" translatable="false">custom</string>
 
-
+    <string name="holdTimeKey" translatable="false">holdTime</string>
+    <string name="holdTimeTitle">Hold Time</string>
+    <string name="holdTimeSummary">Time in tenths of second to hold button for next/previous word</string>
 </resources>

@@ -3,6 +3,8 @@ package cognitiva.dyslexreader;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -96,5 +98,8 @@ public class MainActivity extends AppCompatActivity {
     public void onClickSettings(View v){
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
     }
 }

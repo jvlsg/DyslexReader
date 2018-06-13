@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:asp="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreference
         android:key="@string/whiteNoiseKey"
@@ -32,6 +33,15 @@
         android:entryValues="@array/entryValuesThemes"
         android:dialogTitle="@string/themeDialog"
         android:defaultValue="@string/themeValueLight"
+        />
+
+    <SeekBarPreference
+        android:key="@string/holdTimeKey"
+        android:title="@string/holdTimeTitle"
+        android:summary="@string/holdTimeSummary"
+        android:max="@integer/holdTimeMax"
+        android:defaultValue="@integer/holdTimeDefault"
+        asp:min="@integer/holdTimeMin"
         />
 
 

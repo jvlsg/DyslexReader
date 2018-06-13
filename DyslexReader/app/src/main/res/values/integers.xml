@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="holdTimeMin">0</integer>
+    <integer name="holdTimeDefault">20</integer>
+    <integer name="holdTimeMax">100</integer>
+</resources>
