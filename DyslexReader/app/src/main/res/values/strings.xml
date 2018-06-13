@@ -16,5 +16,17 @@
     <!-- ANALYSIS ACTIVITY  -->
     <string name="btnPronunciationLabel">Analyzre</string>
 
+    <!-- SETTINGS ACTIVITY -->
+    <string name="settingsLabel">Settings</string>
+    
+    <string name="whiteNoiseTitle">Play White Noise</string>
+    <string name="whiteNoiseSummary">Plays White Noise to reduce noise distractions</string>
+    
+    <string name="firstLastColorsTitle">Change prefix suffix color</string>
+    <string name="firstLastColorsSummary">Changes color of first and last letters</string>
+
+    <string name="readingModeTitle">Reading Mode</string>
+    <string name="readingModeSummary">Choose Reading mode</string>
+    <string name="readingModeDialog">Choose Reading mode</string>
 
 </resources>

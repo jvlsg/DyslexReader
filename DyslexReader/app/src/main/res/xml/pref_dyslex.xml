@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="switchWhiteNoise"
+        android:title="@string/whiteNoiseTitle"
+        android:summary="@string/whiteNoiseSummary"
+        />
+
+    <SwitchPreference
+        android:key="switchFirstLastColors"
+        android:title="@string/firstLastColorsTitle"
+        android:summary="@string/firstLastColorsSummary"
+        />
+
+    <ListPreference
+        android:key="listReadingMode"
+        android:title="@string/readingModeTitle"
+        android:summary="@string/readingModeSummary"
+        android:entries="@array/readingModes"
+        android:entryValues="@array/entryValuesReadingModes"
+        android:dialogTitle="@string/readingModeDialog" />
+
+</PreferenceScreen>
