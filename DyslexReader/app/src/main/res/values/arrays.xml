@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="readingModes">
-        <item>Normal</item>
-        <item>Word-By-Word</item>
+        <item>@string/readingModeLabelHighlight</item>
+        <item>@string/readingModeLabelWordByWord</item>
     </array>
     <array name="entryValuesReadingModes">
-        <item>true</item>
-        <item>false</item>
+        <item>@string/readingModeValueHighlight</item>
+        <item>@string/readingModeValueWordByWord</item>
     </array>
 </resources>

@@ -29,4 +29,10 @@
     <string name="readingModeSummary">Choose Reading mode</string>
     <string name="readingModeDialog">Choose Reading mode</string>
 
+    <string name="readingModeLabelHighlight">Highlight</string>
+    <string name="readingModeLabelWordByWord">Word By Word</string>
+
+    <string name="readingModeValueHighlight">highlight</string>
+    <string name="readingModeValueWordByWord">wordByWord</string>
+
 </resources>
