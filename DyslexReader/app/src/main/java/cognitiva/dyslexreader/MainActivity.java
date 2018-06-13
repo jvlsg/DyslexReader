@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
      * Button Callback for btnSettings
      */
     public void onClickSettings(View v){
-
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
     }
 }
