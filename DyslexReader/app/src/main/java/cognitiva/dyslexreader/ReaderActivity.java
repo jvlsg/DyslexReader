@@ -1,8 +1,10 @@
 package cognitiva.dyslexreader;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
@@ -68,6 +70,7 @@ public class ReaderActivity extends AppCompatActivity {
         {
             list.add(st.nextToken());
         }
+        loadUserPreferences();
         initializeText();
     }
 
@@ -106,6 +109,21 @@ public class ReaderActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * Usada para carregar as preferencias de modo de leitura do usuário
+     */
+    void loadUserPreferences(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String mode = preferences.getString(getString(R.string.readingModeKey), getString(R.string.readingModeValueWordByWord));
+        if(mode.equals(getString(R.string.readingModeValueHighlight)))
+            ReadingType = false;
+        else
+            ReadingType = true;
+
+        swicthFirstLastColors = preferences.getBoolean(getString(R.string.firstLastColorsKey), false);
+    }
 
     /**
      * Verifica se o switch pra colorir a primeira e última letra está como true
@@ -264,6 +282,8 @@ public class ReaderActivity extends AppCompatActivity {
     public void onClickAnalyze (View v)
     {
         Intent intent = new Intent(getBaseContext(), AnalysisActivity.class);
+
+        intent.putExtra(getString(R.string.wordToAnalyzeKey),selectedWord);
         /**
          * Inserir aqui que devemos pegar a palavra atual e mandar pra próxima activity
          */

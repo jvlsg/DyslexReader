@@ -12,10 +12,8 @@ public class AnalysisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analysis);
 
-        /*Intent intent = getIntent();
+        Intent intent = getIntent();
         String wordToAnalyze = intent.getExtras().getString(getString(R.string.wordToAnalyzeKey));
-        */
-        //wordToAnalyze = "Duck";
 
         /**
          * Botão para retorno à Reader ACtivity
