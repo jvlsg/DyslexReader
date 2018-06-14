@@ -46,6 +46,8 @@ public class ReaderActivity extends AppCompatActivity {
     //Onde começa o texto pro highlight
     int startHightlight = 0;
 
+    Boolean swicthFirstLastColors = false;
+
 
 
 
@@ -76,10 +78,18 @@ public class ReaderActivity extends AppCompatActivity {
         if(ReadingType == false)
         {
             //Botar o texto inteiro aqui
+            /**
+             *  Cria um spannable, que é necessário
+             * Incrementa pra pegar a próxima palavra
+             * Colore a palavra atual, pegando o início dela com o startHighlight até a palavra
+             * Adciona o startHighlight o tamanho da paavra pra ser reunitlizado depois
+             */
             tvMainText.setText(text, TextView.BufferType.SPANNABLE);
             Spannable s = (Spannable) tvMainText.getText();
+            tvMainText.setTextSize(20);
             wordPosition++;
             s.setSpan(new ForegroundColorSpan(0xFFFF0000), 0, list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            checkFirstLastColors(s);
             startHightlight = startHightlight + list.get(wordPosition).length();
         }
         else
@@ -92,6 +102,20 @@ public class ReaderActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Verifica se o switch pra colorir a primeira e última letra está como true
+     * Se sim, então colore
+     * @param s
+     */
+    public void checkFirstLastColors(Spannable s)
+    {
+        if(swicthFirstLastColors == true)
+        {
+            s.setSpan(new ForegroundColorSpan(0xFF00FF00), startHightlight, startHightlight + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(0xFF0000FF), startHightlight + list.get(wordPosition).length() - 1, startHightlight + list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+    }
 
 
     /**
@@ -121,6 +145,7 @@ public class ReaderActivity extends AppCompatActivity {
                 Spannable s = (Spannable) tvMainText.getText();
                 wordPosition++;
                 s.setSpan(new ForegroundColorSpan(0xFFFF0000), startHightlight, startHightlight + list.get(wordPosition).length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                checkFirstLastColors(s);
                 startHightlight = startHightlight + list.get(wordPosition).length() + 1;
             }
         }
@@ -148,11 +173,18 @@ public class ReaderActivity extends AppCompatActivity {
             }
             else
             {
+                /**
+                 *  Cria um spannable, que é necessário
+                 * Incrementa pra pegar a próxima palavra
+                 * Colore a palavra atual, pegando o início dela com o startHighlight até a palavra
+                 * Subtrai o startHighlight o tamanho da palavra pra ser reutilizado depois
+                 */
                 tvMainText.setText(text, TextView.BufferType.SPANNABLE);
                 Spannable s = (Spannable) tvMainText.getText();
-                wordPosition++;
-                s.setSpan(new ForegroundColorSpan(0xFFFF0000), startHightlight - list.get(wordPosition).length() - 1, startHightlight, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 startHightlight = startHightlight - list.get(wordPosition).length() - 1;
+                wordPosition--;
+                s.setSpan(new ForegroundColorSpan(0xFFFF0000), startHightlight - list.get(wordPosition).length(), startHightlight, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                checkFirstLastColors(s);
             }
         }
         else
