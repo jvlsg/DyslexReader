@@ -6,4 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".AnalysisActivity">
 
+    <TextView
+        android:id="@+id/tvSyllable"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:drawable/editbox_background"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="In-cons-ti-tu-cio-na-li-ssi-ma-men-te" />
+
+    <TextView
+        android:id="@+id/tvPhonetics"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        tools:text="/ˌlɔː.ɹəm //ˌlɔː.ɹəm //ˌlɔː.ɹəm /"
+        app:layout_constraintStart_toStartOf="@+id/tvSyllable"
+        app:layout_constraintTop_toBottomOf="@+id/tvSyllable" />
+
+    <TextView
+        android:id="@+id/tvDefinition"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPhonetics"
+        tools:text="advérbio \n De um modo completamente inconstitucional; que se opõe ao estabelecido pela Constituição: projeto inconstitucionalissimamente aprovado.Etimologia (origem da palavra inconstitucionalissimamente). Inconstitucionalíssimo + mente." />
+
+    <Button
+        android:id="@+id/btnPronunciation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/btnPronunciationLabel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 </android.support.constraint.ConstraintLayout>

@@ -15,8 +15,11 @@
     <string name="btnAnalyzeWordLabel">Analyze</string>
 
     <!-- ANALYSIS ACTIVITY  -->
+    <string name="wordToAnalyzeKey">WordToAnalyze</string>
     <string name="btnPronunciationLabel">Play sound</string>
     <string name="file">FILE</string>
+
+
 
     <!-- SETTINGS ACTIVITY -->
     <string name="settingsLabel">Settings</string>
