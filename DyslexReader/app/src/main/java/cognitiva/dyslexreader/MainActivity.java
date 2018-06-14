@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,9 +51,17 @@ public class MainActivity extends AppCompatActivity {
     public void onClickReader(View v){
         String text;
         text = tvPreview.getText().toString();
-        Intent intent = new Intent(getBaseContext(), ReaderActivity.class);
-        intent.putExtra("text", text);
-        startActivity(intent);
+        if (text != "")
+        {
+            Intent intent = new Intent(getBaseContext(), ReaderActivity.class);
+            intent.putExtra("text", text);
+            startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(this, R.string.toastSendError, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /***
@@ -74,14 +83,17 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickPaste(View v){
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        ClipData.Item item = clipboardManager.getPrimaryClip().getItemAt(0);
-        if (item.getText() != null)
+        if(clipboardManager.hasPrimaryClip())
         {
-            tvPreview.setText(item.getText());
-        }
-        else
-        {
-            return;
+            ClipData.Item item = clipboardManager.getPrimaryClip().getItemAt(0);
+            if (item.getText() != null)
+            {
+                tvPreview.setText(item.getText());
+            }
+            else
+            {
+                return;
+            }
         }
     }
 
