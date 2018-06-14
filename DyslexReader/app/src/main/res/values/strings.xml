@@ -7,6 +7,7 @@
     <string name="btnCameraLabel">Camera</string>
     <string name="btnPasteLabel">Paste</string>
     <string name="btnSettingsLabel">Settings</string>
+    <string name="toastSendError">Selecione algum texto antes de enviar para o Leitor</string>
     <string name="tvPreviewHint">This window will show the text that will be modified.</string>
 
     <!-- READER ACTIVITY  -->
