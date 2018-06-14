@@ -38,19 +38,17 @@ public class ReaderActivity extends AppCompatActivity {
     //Array que contém todas as palavras em uma lista
     ArrayList<String> list = new ArrayList<String>();
 
+    //Array que contém a posição da palavra no texto original
+    ArrayList<Integer> listCoordnate = new ArrayList<Integer>();
+
     /**
      * Se for 0, é por highlight, se for 1 é PPP
      */
     Boolean ReadingType = false;
 
-    //Onde começa o texto pro highlight
-    int startHightlight = 0;
 
     //Se o programa via pintar a primeira e última letra da palavra selecionada
     Boolean swicthFirstLastColors = true;
-
-
-
 
 
     @Override
@@ -68,7 +66,37 @@ public class ReaderActivity extends AppCompatActivity {
         {
             list.add(st.nextToken());
         }
+        getListCooridinates();
         initializeText();
+    }
+
+    /**
+     * Função que coloca os valores na listCoordnates
+     */
+    public void getListCooridinates()
+    {
+        int start = 0;
+        Boolean flag = false;
+        if (text.charAt(start) != ' ' && text.charAt(start) != '\n' && text.charAt(start) != '\t' && flag == false)
+        {
+            listCoordnate.add(start);
+        }
+        for (; start < text.length(); ++start)
+        {
+            if (text.charAt(start) == ' ' || text.charAt(start) == '\n' || text.charAt(start) == '\t')
+            {
+                flag = true;
+            }
+            else
+            {
+                if(flag == true)
+                {
+                    flag = false;
+                    listCoordnate.add(start);
+                }
+            }
+
+        }
     }
 
     /**
@@ -89,9 +117,8 @@ public class ReaderActivity extends AppCompatActivity {
             Spannable s = (Spannable) tvMainText.getText();
             tvMainText.setTextSize(20);
             wordPosition++;
-            s.setSpan(new ForegroundColorSpan(0xFFFF0000), 0, list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(0xFFFF0000), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition+1), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             checkFirstLastColors(s);
-            startHightlight = startHightlight + list.get(wordPosition).length();
             selectedWord = list.get(wordPosition);
 
         }
@@ -117,39 +144,12 @@ public class ReaderActivity extends AppCompatActivity {
     {
         if(swicthFirstLastColors == true)
         {
-            if(wordPosition == 0)
-            {
-                s.setSpan(new ForegroundColorSpan(0xFF00FF00), startHightlight, startHightlight + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                s.setSpan(new ForegroundColorSpan(0xFF0000FF), startHightlight + list.get(wordPosition).length() - 1, startHightlight + list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-            else
-            {
-                s.setSpan(new ForegroundColorSpan(0xFF00FF00), startHightlight + 1, startHightlight + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                s.setSpan(new ForegroundColorSpan(0xFF0000FF), startHightlight + list.get(wordPosition).length(), startHightlight + list.get(wordPosition).length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-
+            s.setSpan(new ForegroundColorSpan(0xFF00FF00), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition)+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(0xFF0000FF), listCoordnate.get(wordPosition) + list.get(wordPosition).length() - 1, listCoordnate.get(wordPosition) + list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
     }
 
-    public void checkPreviousFirstLastColors(Spannable s)
-    {
-        if(swicthFirstLastColors == true)
-        {
-            if(wordPosition == 0)
-            {
-                s.setSpan(new ForegroundColorSpan(0xFF00FF00), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                s.setSpan(new ForegroundColorSpan(0xFF0000FF), list.get(wordPosition).length() - 1, list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-            else
-            {
-                s.setSpan(new ForegroundColorSpan(0xFF00FF00), startHightlight - list.get(wordPosition).length(), startHightlight - list.get(wordPosition).length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                s.setSpan(new ForegroundColorSpan(0xFF0000FF), startHightlight - 1, startHightlight, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-
-        }
-
-    }
 
 
     /**
@@ -193,9 +193,8 @@ public class ReaderActivity extends AppCompatActivity {
                 tvMainText.setText(text, TextView.BufferType.SPANNABLE);
                 Spannable s = (Spannable) tvMainText.getText();
                 wordPosition++;
-                s.setSpan(new ForegroundColorSpan(0xFFFF0000), startHightlight, startHightlight + list.get(wordPosition).length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                s.setSpan(new ForegroundColorSpan(0xFFFF0000), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition) + list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 checkFirstLastColors(s);
-                startHightlight = startHightlight + list.get(wordPosition).length() + 1;
                 selectedWord = list.get(wordPosition);
             }
         }
@@ -231,16 +230,11 @@ public class ReaderActivity extends AppCompatActivity {
                  */
                 tvMainText.setText(text, TextView.BufferType.SPANNABLE);
                 Spannable s = (Spannable) tvMainText.getText();
-                startHightlight = startHightlight - list.get(wordPosition).length() - 1;
                 wordPosition--;
-                s.setSpan(new ForegroundColorSpan(0xFFFF0000), startHightlight - list.get(wordPosition).length(), startHightlight, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                checkPreviousFirstLastColors(s);
+                s.setSpan(new ForegroundColorSpan(0xFFFF0000), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition) + list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                checkFirstLastColors(s);
                 selectedWord = list.get(wordPosition);
             }
-        }
-        else
-        {
-
         }
     }
 
