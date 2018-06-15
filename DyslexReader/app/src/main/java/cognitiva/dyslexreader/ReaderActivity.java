@@ -55,8 +55,8 @@ public class ReaderActivity extends AppCompatActivity {
     //Se o programa via pintar a primeira e última letra da palavra selecionada
     Boolean swicthFirstLastColors = true;
 
-    //Tempo que cada palavra aparece no modo de segurar
-    int holdTime = 500;
+    //Tempo que cada palavra aparece no modo de segurar, em milisegundos
+    int holdTime;
 
     // Handler necessário para fazer as funções de segurar os botões
     android.os.Handler handler = new android.os.Handler();
@@ -216,6 +216,8 @@ public class ReaderActivity extends AppCompatActivity {
             ReadingType = true;
 
         swicthFirstLastColors = preferences.getBoolean(getString(R.string.firstLastColorsKey), false);
+
+        holdTime = 100 * preferences.getInt(getString(R.string.holdTimeKey),R.integer.holdTimeDefault);
     }
 
     /**
