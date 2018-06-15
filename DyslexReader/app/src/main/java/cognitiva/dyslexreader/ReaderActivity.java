@@ -2,6 +2,7 @@ package cognitiva.dyslexreader;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -39,6 +39,9 @@ public class ReaderActivity extends AppCompatActivity {
 
     //Posição no ArrayList da palavra atual
     int wordPosition = -1;
+
+    //Player para audio do whitnoise
+    MediaPlayer mediaPlayer;
 
     //Array que contém todas as palavras em uma lista
     ArrayList<String> list = new ArrayList<String>();
@@ -218,6 +221,21 @@ public class ReaderActivity extends AppCompatActivity {
         swicthFirstLastColors = preferences.getBoolean(getString(R.string.firstLastColorsKey), false);
 
         holdTime = 100 * preferences.getInt(getString(R.string.holdTimeKey),R.integer.holdTimeDefault);
+
+        //Play White noise
+        //mediaPlayer = MediaPlayer.create(this, R.raw.screamingbeaver);
+        mediaPlayer = new MediaPlayer();
+        Boolean hasWhiteNoise = preferences.getBoolean(getString(R.string.whiteNoiseKey), true);
+        if(hasWhiteNoise){
+            try{
+                mediaPlayer.setDataSource("android.resource://cognitiva.dyslexreader/res/raw/screamingbeaver.mp3");
+                mediaPlayer.prepare();
+                mediaPlayer.setLooping(true);
+                mediaPlayer.start();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
