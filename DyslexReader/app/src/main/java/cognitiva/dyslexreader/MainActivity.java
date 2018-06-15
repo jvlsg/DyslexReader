@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
          * O textView será muito usado, então já coloca ele aqui
          */
         tvPreview = (TextView)findViewById(R.id.tvPreview);
+        tvPreview.setMovementMethod(new ScrollingMovementMethod());
     }
 
 
