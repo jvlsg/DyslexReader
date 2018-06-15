@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spannable;
+import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -50,6 +53,12 @@ public class ReaderActivity extends AppCompatActivity {
     //Se o programa via pintar a primeira e última letra da palavra selecionada
     Boolean swicthFirstLastColors = true;
 
+    //Tempo que cada palavra aparece no modo de segurar
+    int holdTime = 500;
+
+    // Handler necessário para fazer as funções de segurar os botões
+    android.os.Handler handler = new android.os.Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,8 @@ public class ReaderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reader);
 
         tvMainText = (TextView) findViewById(R.id.tvMainText);
+        tvMainText.setMovementMethod(new ScrollingMovementMethod());
+
         //Pega o texto da MainActivity
         text = getIntent().getStringExtra("text");
         //tvMainText.setText(text);
@@ -68,7 +79,62 @@ public class ReaderActivity extends AppCompatActivity {
         }
         getListCooridinates();
         initializeText();
+
+        btnNextWord = (Button) findViewById(R.id.btnNextWord);
+        btnPreviousWord = (Button) findViewById(R.id.btnPreviousWord);
+
+        //Seta Touch listeners, para que os botões de next e previous funcionem tanto pra hold quanto pra normal
+        btnNextWord.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    handler.postDelayed(longNext, 0);
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP)
+                {
+                    handler.removeCallbacks(longNext);
+                }
+                return false;
+            }
+        });
+
+
+        btnPreviousWord.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    handler.postDelayed(longPrevious, 0);
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP)
+                {
+                    handler.removeCallbacks(longPrevious);
+                }
+                return false;
+            }
+        });
     }
+
+    //Função para chamar uma ou várias vezes o nextWord
+    private Runnable longNext = new Runnable() {
+        @Override
+        public void run() {
+            onClickNextWord();
+            handler.postDelayed(this, holdTime);
+        }
+    };
+
+    //Função para chamar uma ou várias vezes o previousWord
+    private Runnable longPrevious = new Runnable() {
+        @Override
+        public void run() {
+            onClickPeviousWord();
+            handler.postDelayed(this, holdTime);
+        }
+    };
+
+
 
     /**
      * Função que coloca os valores na listCoordnates
@@ -95,7 +161,6 @@ public class ReaderActivity extends AppCompatActivity {
                     listCoordnate.add(start);
                 }
             }
-
         }
     }
 
@@ -130,6 +195,7 @@ public class ReaderActivity extends AppCompatActivity {
             selectedWord = list.get(wordPosition);
             checkFirstLastColors();
         }
+
 
     }
 
@@ -169,9 +235,8 @@ public class ReaderActivity extends AppCompatActivity {
 
     /**
      * Quando você apertar o botão de próximo, ele pega o próximo do array
-     * @param v
      */
-    public void onClickNextWord(View v)
+    public void onClickNextWord()
     {
         if (wordPosition < list.size() - 1)
         {
@@ -207,9 +272,8 @@ public class ReaderActivity extends AppCompatActivity {
 
     /**
      * Quando você apertar pra voltar palavra, ele pega o anterior
-     * @param v
      */
-    public void onClickPeviousWord(View v)
+    public void onClickPeviousWord()
     {
         if(wordPosition > 0)
         {

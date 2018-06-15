@@ -9,71 +9,68 @@
     <TextView
         android:id="@+id/tvMainText"
         android:layout_width="0dp"
-        android:layout_height="327dp"
+        android:layout_height="193dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@android:drawable/editbox_background"
-        android:scrollbars = "vertical"
+        android:minHeight="193dp"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnNextWord"
         android:layout_width="85dp"
         android:layout_height="75dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="onClickNextWord"
         android:text="@string/btnNextWordLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pbReadingProgress" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tvMainText" />
 
     <Button
         android:id="@+id/btnPreviousWord"
         android:layout_width="85dp"
         android:layout_height="75dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="onClickPeviousWord"
         android:text="@string/btnPreviousWordLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pbReadingProgress" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvMainText" />
 
     <Button
         android:id="@+id/btnSettings"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="85dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:onClick="onClickSettings"
         android:text="@string/btnSettingsLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnPreviousWord" />
 
     <Button
         android:id="@+id/btnAnalyzeWord"
-        android:layout_width="wrap_content"
+        android:layout_width="85dp"
         android:layout_height="75dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:onClick="onClickAnalyze"
         android:text="@string/btnAnalyzeWordLabel"
-        app:layout_constraintEnd_toStartOf="@+id/btnNextWord"
-        app:layout_constraintStart_toEndOf="@+id/btnPreviousWord"
-        app:layout_constraintTop_toBottomOf="@+id/pbReadingProgress" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnNextWord" />
 
     <ProgressBar
         android:id="@+id/pbReadingProgress"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="368dp"
+        android:layout_width="0dp"
         android:layout_height="10dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
