@@ -22,11 +22,10 @@ public class SettingsActivity extends AppCompatActivity {
         /**
          * Botão para retorno ao menu Principal
          */
-        ActionBar actionBar = this.getSupportActionBar();
+        /*ActionBar actionBar = this.getSupportActionBar();
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
+        }*/
         /**
          *
          */

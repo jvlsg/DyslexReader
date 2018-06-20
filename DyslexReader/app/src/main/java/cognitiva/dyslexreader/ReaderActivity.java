@@ -19,7 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class ReaderActivity extends AppCompatActivity {
+public class ReaderActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     /**
      * Tudo que será usado da interface está aqui
@@ -40,13 +40,14 @@ public class ReaderActivity extends AppCompatActivity {
     //Posição no ArrayList da palavra atual
     int wordPosition = -1;
 
-    //Player para audio do whitnoise
-    MediaPlayer mediaPlayer;
-
     //Array que contém todas as palavras em uma lista
     ArrayList<String> list = new ArrayList<String>();
 
-    //Array que contém a posição da palavra no texto original
+    /**
+     * Array que contém a posição em caracteres da palavra no texto original.
+     * Usado para setar as posições de Spannable para alterar a cor de highlight / prefixo / sufixo
+     * da palavra atual.
+    */
     ArrayList<Integer> listCoordnate = new ArrayList<Integer>();
 
     /**
@@ -65,7 +66,7 @@ public class ReaderActivity extends AppCompatActivity {
     android.os.Handler handler = new android.os.Handler();
 
     Boolean switchWhiteNoise;
-
+    //Usado para tocar o ruído branco
     MediaPlayer mp;
 
     @Override
@@ -90,14 +91,13 @@ public class ReaderActivity extends AppCompatActivity {
 
         //Pega o texto da MainActivity
         text = getIntent().getStringExtra("text");
-        //tvMainText.setText(text);
 
         StringTokenizer st = new StringTokenizer(text);
         while(st.hasMoreTokens())
         {
             list.add(st.nextToken());
         }
-        getListCooridinates();
+        getListCoordinates();
         loadUserPreferences();
         initializeText();
 
@@ -142,6 +142,13 @@ public class ReaderActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+
     //Função para chamar uma ou várias vezes o nextWord
     private Runnable longNext = new Runnable() {
         @Override
@@ -177,7 +184,7 @@ public class ReaderActivity extends AppCompatActivity {
     /**
      * Função que coloca os valores na listCoordnates
      */
-    public void getListCooridinates()
+    public void getListCoordinates()
     {
         int start = 0;
         Boolean flag = false;
@@ -216,11 +223,12 @@ public class ReaderActivity extends AppCompatActivity {
              * Colore a palavra atual, pegando o início dela com o startHighlight até a palavra
              * Adciona o startHighlight o tamanho da paavra pra ser reunitlizado depois
              */
+            tvMainText.setGravity(Gravity.LEFT);
             tvMainText.setText(text, TextView.BufferType.SPANNABLE);
             Spannable s = (Spannable) tvMainText.getText();
             tvMainText.setTextSize(20);
             wordPosition++;
-            s.setSpan(new ForegroundColorSpan(0xFFFF0000), listCoordnate.get(wordPosition), list.get(wordPosition).length() , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(0xFFFF0000), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition) + list.get(wordPosition).length() , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             checkFirstLastColors(s);
             selectedWord = list.get(wordPosition);
 
@@ -231,6 +239,7 @@ public class ReaderActivity extends AppCompatActivity {
             wordPosition++;
             tvMainText.setGravity(Gravity.CENTER);
             selectedWord = list.get(wordPosition);
+            tvMainText.setText(selectedWord, TextView.BufferType.SPANNABLE);
             checkFirstLastColors();
         }
     }
@@ -241,6 +250,8 @@ public class ReaderActivity extends AppCompatActivity {
      */
     void loadUserPreferences(){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //Listener para mudanças de Configurações
+        preferences.registerOnSharedPreferenceChangeListener(this);
 
         String mode = preferences.getString(getString(R.string.readingModeKey), getString(R.string.readingModeValueWordByWord));
         if(mode.equals(getString(R.string.readingModeValueHighlight)))
@@ -252,24 +263,7 @@ public class ReaderActivity extends AppCompatActivity {
 
         holdTime = 100 * preferences.getInt(getString(R.string.holdTimeKey),R.integer.holdTimeDefault);
 
-<<<<<<< HEAD
-        //Play White noise
-        //mediaPlayer = MediaPlayer.create(this, R.raw.screamingbeaver);
-        mediaPlayer = new MediaPlayer();
-        Boolean hasWhiteNoise = preferences.getBoolean(getString(R.string.whiteNoiseKey), true);
-        if(hasWhiteNoise){
-            try{
-                mediaPlayer.setDataSource("android.resource://cognitiva.dyslexreader/res/raw/screamingbeaver.mp3");
-                mediaPlayer.prepare();
-                mediaPlayer.setLooping(true);
-                mediaPlayer.start();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-=======
         switchWhiteNoise = preferences.getBoolean(getString(R.string.whiteNoiseKey), false);
->>>>>>> Kenji's
     }
 
     /**
@@ -287,7 +281,6 @@ public class ReaderActivity extends AppCompatActivity {
         }
 
     }
-
 
 
     /**
@@ -317,6 +310,7 @@ public class ReaderActivity extends AppCompatActivity {
                 //Se for PPP...
                 wordPosition++;
                 selectedWord = list.get(wordPosition);
+                tvMainText.setText(selectedWord, TextView.BufferType.SPANNABLE);
                 checkFirstLastColors();
             }
             else
@@ -354,6 +348,7 @@ public class ReaderActivity extends AppCompatActivity {
                 //Se for por PPP
                 wordPosition--;
                 selectedWord = list.get(wordPosition);
+                tvMainText.setText(selectedWord, TextView.BufferType.SPANNABLE);
                 checkFirstLastColors();
             }
             else
@@ -403,4 +398,40 @@ public class ReaderActivity extends AppCompatActivity {
     }
 
 
+    /***
+     * Atualiza a UI baseado em mudanças nas configuarações de preferencias dos usuarios
+     */
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        ///FIRST LAST COLORS
+        if(key.equals(getString(R.string.firstLastColorsKey))){
+            swicthFirstLastColors = sharedPreferences.getBoolean(key,false);
+
+            if(wordPosition == list.size()-1){
+                onClickPeviousWord();
+                onClickNextWord();
+            }else {
+                onClickNextWord();
+                onClickPeviousWord();
+            }
+        }
+        ///WHITE NOISE
+        if(key.equals(getString(R.string.whiteNoiseKey))){
+            switchWhiteNoise = sharedPreferences.getBoolean(key,false);
+            //playWhiteNoise();
+        }
+        ///HOLD TIME
+        if(key.equals(getString(R.string.holdTimeKey))){
+            holdTime =  100 * sharedPreferences.getInt(key, R.integer.holdTimeDefault);
+        }
+        ///READING MODE
+        if(key.equals(getString(R.string.readingModeKey))){
+            String mode = sharedPreferences.getString(key,getString(R.string.readingModeValueWordByWord));
+            if(mode.equals(getString(R.string.readingModeValueHighlight)))
+                ReadingType = false;
+            else
+                ReadingType = true;
+            initializeText();
+        }
+    }
 }
