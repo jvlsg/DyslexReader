@@ -64,6 +64,21 @@ public class ReaderActivity extends AppCompatActivity {
     // Handler necessário para fazer as funções de segurar os botões
     android.os.Handler handler = new android.os.Handler();
 
+    Boolean switchWhiteNoise;
+
+    MediaPlayer mp;
+
+    @Override
+    protected  void onPause()
+    {
+        super.onPause();
+        if(mp != null)
+        {
+            mp.pause();
+        }
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +100,11 @@ public class ReaderActivity extends AppCompatActivity {
         getListCooridinates();
         loadUserPreferences();
         initializeText();
+
+        mp = MediaPlayer.create(this, R.raw.whitenoise);
+        mp.setLooping(true);
+
+        playWhiteNoise();
 
         btnNextWord = (Button) findViewById(R.id.btnNextWord);
         btnPreviousWord = (Button) findViewById(R.id.btnPreviousWord);
@@ -141,6 +161,18 @@ public class ReaderActivity extends AppCompatActivity {
     };
 
 
+    public void playWhiteNoise()
+    {
+        if(switchWhiteNoise == true)
+        {
+            mp.start();
+        }
+        else
+        {
+            mp.stop();
+        }
+    }
+
 
     /**
      * Função que coloca os valores na listCoordnates
@@ -188,7 +220,7 @@ public class ReaderActivity extends AppCompatActivity {
             Spannable s = (Spannable) tvMainText.getText();
             tvMainText.setTextSize(20);
             wordPosition++;
-            s.setSpan(new ForegroundColorSpan(0xFFFF0000), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition+1), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(0xFFFF0000), listCoordnate.get(wordPosition), list.get(wordPosition).length() , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             checkFirstLastColors(s);
             selectedWord = list.get(wordPosition);
 
@@ -201,8 +233,6 @@ public class ReaderActivity extends AppCompatActivity {
             selectedWord = list.get(wordPosition);
             checkFirstLastColors();
         }
-
-
     }
 
 
@@ -222,6 +252,7 @@ public class ReaderActivity extends AppCompatActivity {
 
         holdTime = 100 * preferences.getInt(getString(R.string.holdTimeKey),R.integer.holdTimeDefault);
 
+<<<<<<< HEAD
         //Play White noise
         //mediaPlayer = MediaPlayer.create(this, R.raw.screamingbeaver);
         mediaPlayer = new MediaPlayer();
@@ -236,6 +267,9 @@ public class ReaderActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+=======
+        switchWhiteNoise = preferences.getBoolean(getString(R.string.whiteNoiseKey), false);
+>>>>>>> Kenji's
     }
 
     /**
