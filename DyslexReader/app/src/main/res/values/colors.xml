@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- COLORS FOR LIGHT THEME -->
+    <color name="colorPrimary_light">#3F51B5</color>
+    <color name="colorPrimaryDark_light">#303F9F</color>
+    <color name="colorAccent_light">#FF4081</color>
+    <color name="colorBackground_light">#FAFAFA</color>
+    <!-- COLORS FOR DARK THEME -->
+    <color name="colorPrimary_dark">#3F51B5</color>
+    <color name="colorPrimaryDark_dark">#303F9F</color>
+    <color name="colorAccent_dark">#FF4081</color>
+    <color name="colorBackground_dark">#FAFAFA</color>
+
 </resources>
