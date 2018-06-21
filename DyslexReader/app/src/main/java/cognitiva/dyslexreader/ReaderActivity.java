@@ -2,6 +2,7 @@ package cognitiva.dyslexreader;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,8 +67,18 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
     android.os.Handler handler = new android.os.Handler();
 
     Boolean switchWhiteNoise;
+
+    //Usado para carregar o tema atual do aplicativo
+    String currentAppTheme;
+
     //Usado para tocar o ruído branco
     MediaPlayer mp;
+
+    //Usadas para colorir o texto
+    int currentHighlightColor;
+    int currentPrefixColor;
+    int currentSuffixColor;
+
 
     @Override
     protected  void onPause()
@@ -78,8 +89,6 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
             mp.pause();
         }
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +106,10 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         {
             list.add(st.nextToken());
         }
+
         getListCoordinates();
         loadUserPreferences();
+        updateCurrentColors();
         initializeText();
 
         mp = MediaPlayer.create(this, R.raw.whitenoise);
@@ -168,6 +179,88 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
     };
 
 
+
+
+    /**
+     * Usada para carregar as preferencias de modo de leitura do usuário
+     */
+    void loadUserPreferences(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        //Listener para mudanças de Configurações
+        preferences.registerOnSharedPreferenceChangeListener(this);
+
+        String mode = preferences.getString(getString(R.string.readingModeKey), getString(R.string.readingModeValueWordByWord));
+        if(mode.equals(getString(R.string.readingModeValueHighlight)))
+            ReadingType = false;
+        else
+            ReadingType = true;
+
+        currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
+
+        swicthFirstLastColors = preferences.getBoolean(getString(R.string.firstLastColorsKey), false);
+
+        holdTime = 100 * preferences.getInt(getString(R.string.holdTimeKey),R.integer.holdTimeDefault);
+
+        switchWhiteNoise = preferences.getBoolean(getString(R.string.whiteNoiseKey), false);
+    }
+
+
+    /**
+     * Quando o texto for incializado pela primeira vez
+     */
+    public void initializeText()
+    {
+        if(ReadingType == false)
+        {
+            //Botar o texto inteiro aqui
+            /**
+             *  Cria um spannable, que é necessário
+             * Incrementa pra pegar a próxima palavra
+             * Colore a palavra atual, pegando o início dela com o startHighlight até a palavra
+             * Adciona o startHighlight o tamanho da paavra pra ser reunitlizado depois
+             */
+            tvMainText.setGravity(Gravity.LEFT);
+            tvMainText.setText(text, TextView.BufferType.SPANNABLE);
+            Spannable s = (Spannable) tvMainText.getText();
+            tvMainText.setTextSize(20);
+            wordPosition++;
+            s.setSpan(new ForegroundColorSpan(currentHighlightColor), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition) + list.get(wordPosition).length() , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            checkFirstLastColors(s);
+            selectedWord = list.get(wordPosition);
+
+        }
+        else
+        {
+            tvMainText.setTextSize(50);
+            wordPosition++;
+            tvMainText.setGravity(Gravity.CENTER);
+            selectedWord = list.get(wordPosition);
+            tvMainText.setText(selectedWord, TextView.BufferType.SPANNABLE);
+            checkFirstLastColors();
+        }
+    }
+
+
+
+    /***
+     * Atualiza as variáveis de cor baseado no tema atual.
+     * O tema atual está armazenado em currentAppTheme
+     */
+    void updateCurrentColors(){
+        if(currentAppTheme.equals(R.string.themeValueLight)){
+            currentHighlightColor = getResources().getColor(R.color.colorTextHighlight_light);
+            currentPrefixColor = getResources().getColor(R.color.colorTextPrefix_light);
+            currentSuffixColor = getResources().getColor(R.color.colorTextSuffix_light);
+        }
+        if(currentAppTheme.equals(R.string.themeValueDark)){
+            currentHighlightColor = getResources().getColor(R.color.colorTextHighlight_dark);
+            currentPrefixColor = getResources().getColor(R.color.colorTextPrefix_dark);
+            currentSuffixColor = getResources().getColor(R.color.colorTextSuffix_dark);
+        }
+
+    }
+
+
     public void playWhiteNoise()
     {
         if(switchWhiteNoise == true)
@@ -209,62 +302,7 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         }
     }
 
-    /**
-     * Quando o texto for incializado pela primeira vez
-     */
-    public void initializeText()
-    {
-        if(ReadingType == false)
-        {
-            //Botar o texto inteiro aqui
-            /**
-             *  Cria um spannable, que é necessário
-             * Incrementa pra pegar a próxima palavra
-             * Colore a palavra atual, pegando o início dela com o startHighlight até a palavra
-             * Adciona o startHighlight o tamanho da paavra pra ser reunitlizado depois
-             */
-            tvMainText.setGravity(Gravity.LEFT);
-            tvMainText.setText(text, TextView.BufferType.SPANNABLE);
-            Spannable s = (Spannable) tvMainText.getText();
-            tvMainText.setTextSize(20);
-            wordPosition++;
-            s.setSpan(new ForegroundColorSpan(0xFFFF0000), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition) + list.get(wordPosition).length() , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            checkFirstLastColors(s);
-            selectedWord = list.get(wordPosition);
 
-        }
-        else
-        {
-            tvMainText.setTextSize(50);
-            wordPosition++;
-            tvMainText.setGravity(Gravity.CENTER);
-            selectedWord = list.get(wordPosition);
-            tvMainText.setText(selectedWord, TextView.BufferType.SPANNABLE);
-            checkFirstLastColors();
-        }
-    }
-
-
-    /**
-     * Usada para carregar as preferencias de modo de leitura do usuário
-     */
-    void loadUserPreferences(){
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        //Listener para mudanças de Configurações
-        preferences.registerOnSharedPreferenceChangeListener(this);
-
-        String mode = preferences.getString(getString(R.string.readingModeKey), getString(R.string.readingModeValueWordByWord));
-        if(mode.equals(getString(R.string.readingModeValueHighlight)))
-            ReadingType = false;
-        else
-            ReadingType = true;
-
-        swicthFirstLastColors = preferences.getBoolean(getString(R.string.firstLastColorsKey), false);
-
-        holdTime = 100 * preferences.getInt(getString(R.string.holdTimeKey),R.integer.holdTimeDefault);
-
-        switchWhiteNoise = preferences.getBoolean(getString(R.string.whiteNoiseKey), false);
-    }
 
     /**
      * Verifica se o switch pra colorir a primeira e última letra está como true
@@ -276,12 +314,11 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
     {
         if(swicthFirstLastColors == true)
         {
-            s.setSpan(new ForegroundColorSpan(0xFF00FF00), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition)+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            s.setSpan(new ForegroundColorSpan(0xFF0000FF), listCoordnate.get(wordPosition) + list.get(wordPosition).length() - 1, listCoordnate.get(wordPosition) + list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(currentPrefixColor), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition)+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(currentSuffixColor), listCoordnate.get(wordPosition) + list.get(wordPosition).length() - 1, listCoordnate.get(wordPosition) + list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
     }
-
 
     /**
      * Pinta a primeira e última letra no modo PPP
@@ -292,8 +329,8 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         {
             tvMainText.setText(selectedWord, TextView.BufferType.SPANNABLE);
             Spannable s = (Spannable) tvMainText.getText();
-            s.setSpan(new ForegroundColorSpan(0xFF00FF00), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            s.setSpan(new ForegroundColorSpan(0xFF0000FF), selectedWord.length()-1, selectedWord.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(currentPrefixColor), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(currentSuffixColor), selectedWord.length()-1, selectedWord.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }
 
@@ -324,7 +361,10 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
                 tvMainText.setText(text, TextView.BufferType.SPANNABLE);
                 Spannable s = (Spannable) tvMainText.getText();
                 wordPosition++;
-                s.setSpan(new ForegroundColorSpan(0xFFFF0000), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition) + list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                s.setSpan(new ForegroundColorSpan(currentHighlightColor),
+                        listCoordnate.get(wordPosition),
+                        listCoordnate.get(wordPosition) + list.get(wordPosition).length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 checkFirstLastColors(s);
                 selectedWord = list.get(wordPosition);
             }
@@ -362,7 +402,10 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
                 tvMainText.setText(text, TextView.BufferType.SPANNABLE);
                 Spannable s = (Spannable) tvMainText.getText();
                 wordPosition--;
-                s.setSpan(new ForegroundColorSpan(0xFFFF0000), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition) + list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                s.setSpan(new ForegroundColorSpan(currentHighlightColor),
+                        listCoordnate.get(wordPosition),
+                        listCoordnate.get(wordPosition) + list.get(wordPosition).length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 checkFirstLastColors(s);
                 selectedWord = list.get(wordPosition);
             }
@@ -434,4 +477,7 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
             initializeText();
         }
     }
+
+
+
 }
