@@ -15,6 +15,8 @@ public class AnalysisActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String wordToAnalyze = intent.getExtras().getString(getString(R.string.wordToAnalyzeKey));
 
+        new FetchWord().execute(wordToAnalyze);
+
         /**
          * Botão para retorno à Reader ACtivity
          */
@@ -23,4 +25,6 @@ public class AnalysisActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+
 }
