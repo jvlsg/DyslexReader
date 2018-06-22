@@ -13,6 +13,8 @@
     <color name="colorTextPrefix_light">#0fff6f</color>
     <color name="colorTextSuffix_light">#2b7de9</color>
 
+    <color name="colorTextView_light">#DDDDDD</color>
+
     <!-- COLORS FOR DARK THEME -->
     <color name="colorPrimary_dark">#00bcd4</color>
     <color name="colorPrimaryDark_dark">#0097a7</color>
@@ -20,11 +22,13 @@
     <color name="colorAccent_dark">#ff4081</color>
     <color name="colorBackground_dark">#212121</color>
 
-    <color name="colorTextPrimary_dark">#fdfdfd</color>
-    <color name="colorTextSecondary_dark">#cecece</color>
+    <color name="colorTextPrimary_dark">#cecece</color>
+    <color name="colorTextSecondary_dark">#fdfdfd</color>
 
     <color name="colorTextHighlight_dark">#F0F000</color>
     <color name="colorTextPrefix_dark">#0FFFF0</color>
     <color name="colorTextSuffix_dark">#FF00FF</color>
+
+    <color name="colorTextView_dark">#333333</color>
 
 </resources>

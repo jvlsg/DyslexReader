@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -93,7 +94,10 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadUserPreferences();
+        setTheme(themeStyle());
         setContentView(R.layout.activity_reader);
+
 
         tvMainText = (TextView) findViewById(R.id.tvMainText);
         tvMainText.setMovementMethod(new ScrollingMovementMethod());
@@ -108,9 +112,11 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         }
 
         getListCoordinates();
-        loadUserPreferences();
         updateCurrentColors();
         initializeText();
+
+
+
 
         mp = MediaPlayer.create(this, R.raw.whitenoise);
         mp.setLooping(true);
@@ -151,12 +157,29 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
                 return false;
             }
         });
+
+
     }
 
     @Override
     protected void onDestroy(){
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    //FUnção que coloca o tema na interface
+    public int themeStyle()
+    {
+        if(currentAppTheme.equals(getString(R.string.themeValueLight)))
+        {
+            return R.style.AppTheme_Light;
+        }
+        else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
+        {
+            return R.style.AppTheme_Dark;
+        }
+        return R.style.AppTheme_Dark;
+
     }
 
 
@@ -246,16 +269,19 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
      * Atualiza as variáveis de cor baseado no tema atual.
      * O tema atual está armazenado em currentAppTheme
      */
-    void updateCurrentColors(){
-        if(currentAppTheme.equals(R.string.themeValueLight)){
+    void updateCurrentColors()
+    {
+        if(currentAppTheme.equals(getString(R.string.themeValueLight))){
             currentHighlightColor = getResources().getColor(R.color.colorTextHighlight_light);
             currentPrefixColor = getResources().getColor(R.color.colorTextPrefix_light);
             currentSuffixColor = getResources().getColor(R.color.colorTextSuffix_light);
+            tvMainText.setBackgroundColor(getResources().getColor(R.color.colorTextView_light));
         }
-        if(currentAppTheme.equals(R.string.themeValueDark)){
+        if(currentAppTheme.equals(getString(R.string.themeValueDark))){
             currentHighlightColor = getResources().getColor(R.color.colorTextHighlight_dark);
             currentPrefixColor = getResources().getColor(R.color.colorTextPrefix_dark);
             currentSuffixColor = getResources().getColor(R.color.colorTextSuffix_dark);
+            tvMainText.setBackgroundColor(getResources().getColor(R.color.colorTextView_dark));
         }
 
     }
@@ -475,6 +501,24 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
             else
                 ReadingType = true;
             initializeText();
+        }
+
+        //THEME
+        if(key.equals(getString(R.string.themeKey)))
+        {
+            String mode = sharedPreferences.getString(key, getString(R.string.themeValueLight));
+            if(mode.equals(getString(R.string.themeValueDark)))
+            {
+                currentAppTheme = getString(R.string.themeValueDark);
+            }
+            else if(mode.equals(getString(R.string.themeValueLight)))
+            {
+                currentAppTheme = getString(R.string.themeValueLight);
+            }
+            setTheme(themeStyle());
+
+            //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
+            //recreate();
         }
     }
 

@@ -8,8 +8,10 @@
         <item name="colorAccent">@color/colorAccent_light</item>
         <item name="android:background">@color/colorBackground_light</item>
 
-        <item name="android:textColorPrimary">@color/colorTextPrimary_dark</item>
-        <item name="android:textColorSecondary">@color/colorTextSecondary_dark</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary_light</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary_light</item>
+
+        <item name="TextViewBackAttributeColor">@color/colorTextView_light</item>
 
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
@@ -23,6 +25,8 @@
 
         <item name="android:textColorPrimary">@color/colorTextPrimary_dark</item>
         <item name="android:textColorSecondary">@color/colorTextSecondary_dark</item>
+
+        <item name="TextViewBackAttributeColor">@color/colorTextView_dark</item>
         
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
