@@ -46,4 +46,30 @@
 
 
 
+    <Preference
+        android:key="@string/themeCustomTextKey"
+        android:summary="This dialog will close automatically when you select a color"
+        android:title="Click for a dialog"/>
+    <Preference
+        android:key="@string/themeCustomBackgroundKey"
+        android:summary="This dialog will close automatically when you select a color"
+        android:title="Click for a dialog"/>
+    <Preference
+        android:key="@string/themeCustomTextviewBackgroundKey"
+        android:summary="This dialog will close automatically when you select a color"
+        android:title="Click for a dialog"/>
+    <Preference
+        android:key="@string/themeCustomHighlightKey"
+        android:summary="This dialog will close automatically when you select a color"
+        android:title="Click for a dialog"/>
+    <Preference
+        android:key="@string/themeCustomPrefixKey"
+        android:summary="This dialog will close automatically when you select a color"
+        android:title="Click for a dialog"/>
+    <Preference
+        android:key="@string/themeCustomSuffixKey"
+        android:summary="This dialog will close automatically when you select a color"
+        android:title="Click for a dialog"/>
+
+
 </PreferenceScreen>
