@@ -256,7 +256,7 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         {
             tvMainText.setTextSize(50);
             wordPosition++;
-            tvMainText.setGravity(Gravity.CENTER);
+            tvMainText.setGravity(Gravity.LEFT);
             selectedWord = list.get(wordPosition);
             tvMainText.setText(selectedWord, TextView.BufferType.SPANNABLE);
             checkFirstLastColors();
@@ -343,7 +343,6 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
             s.setSpan(new ForegroundColorSpan(currentPrefixColor), listCoordnate.get(wordPosition), listCoordnate.get(wordPosition)+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             s.setSpan(new ForegroundColorSpan(currentSuffixColor), listCoordnate.get(wordPosition) + list.get(wordPosition).length() - 1, listCoordnate.get(wordPosition) + list.get(wordPosition).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
-
     }
 
     /**
@@ -516,9 +515,8 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
                 currentAppTheme = getString(R.string.themeValueLight);
             }
             setTheme(themeStyle());
-
             //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
-            //recreate();
+            recreate();
         }
     }
 

@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     //Button to ReaderActivity
     Button btnReader;
@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnSettings;
 
     TextView tvPreview;
+
+    String currentAppTheme;
 
 
     /***
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(loadTheme());
         setContentView(R.layout.activity_main);
 
         /**
@@ -46,6 +49,31 @@ public class MainActivity extends AppCompatActivity {
         tvPreview = (TextView)findViewById(R.id.tvPreview);
         tvPreview.setMovementMethod(new ScrollingMovementMethod());
     }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    public int loadTheme()
+    {
+        SharedPreferences preferences = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
+        preferences.registerOnSharedPreferenceChangeListener(this);
+        String currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
+        if(currentAppTheme.equals(getString(R.string.themeValueLight)))
+        {
+            return R.style.AppTheme_Light;
+        }
+        else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
+        {
+            return R.style.AppTheme_Dark;
+        }
+        return R.style.AppTheme_Dark;
+
+    }
+
 
 
     /***
@@ -115,5 +143,25 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals(getString(R.string.themeKey)))
+        {
+            String mode = sharedPreferences.getString(key, getString(R.string.themeValueLight));
+            if(mode.equals(getString(R.string.themeValueDark)))
+            {
+                currentAppTheme = getString(R.string.themeValueDark);
+            }
+            else if(mode.equals(getString(R.string.themeValueLight)))
+            {
+                currentAppTheme = getString(R.string.themeValueLight);
+            }
+            setTheme(loadTheme());
+
+            //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
+            recreate();
+        }
     }
 }
