@@ -1,6 +1,6 @@
 package cognitiva.dyslexreader;
-
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.util.Pair;
 
@@ -8,7 +8,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
@@ -23,7 +29,8 @@ public class FetchWord extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... strings) {
         ArrayList<Pair <String, String>> definitions = getDefinitions(strings[0]);
         Pair<String[], Integer> hyphenation = getHyphenation(strings[0]);
-
+        String url = getAudioURL(strings[0]);
+        if (url != null) downloadAudioFile(strings[0], url);
         return null;
     }
 
@@ -163,5 +170,98 @@ public class FetchWord extends AsyncTask<String, Void, Void> {
         }
 
         return Pair.create(syllable, stress);
+    }
+
+    private static String getAudioURL(String word) {
+        Response response = null;
+
+        String url = "https://api.wordnik.com/v4/word.json/" + word.toLowerCase() +
+                "/audio?useCanonical=false&limit=1&api_key=" + API_KEY;
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder().url(url).build();
+
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (response != null) {
+            try {
+                String json = response.body().string();
+                Log.d("FetchWord-audio", json);
+                return getAudioUrlJson(json);
+            } catch (IOException e) {
+                Log.d("FetchWord-audio", "erro");
+                e.printStackTrace();
+            }
+        } else {
+            Log.d("FetchWord-audio", "erro");
+        }
+
+        return null;
+    }
+
+    private static String getAudioUrlJson(String jsonString) {
+        JSONArray json = null;
+        JSONObject def = null;
+        String url;
+
+        try {
+            json = new JSONArray(jsonString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        if (json != null) {
+
+            try {
+                def = json.getJSONObject(0);
+                url = def.getString("fileUrl");
+                Log.d("FetchWord-audioURL", url);
+            } catch (JSONException e) {
+                Log.d("FetchWord-audioURL", "erro json");
+                e.printStackTrace();
+                return null;
+            }
+
+        } else {
+            Log.d("FetchWord-audioURL", "erro json");
+            return null;
+        }
+
+        return url;
+    }
+
+    private void downloadAudioFile(String word, String urlString) {
+        int count;
+        try {
+            URL url = new URL(urlString);
+            URLConnection conection = url.openConnection();
+            conection.connect();
+
+            InputStream input = new BufferedInputStream(url.openStream());
+            File folder = new File(Environment.getExternalStorageDirectory()+"/dictionary/");
+            Log.d("folderexists" , ""+folder.exists());
+            if (!folder.exists()) Log.d("mkdirs" , ""+folder.mkdirs());
+            File file = new File(folder, word.toLowerCase()+".mp3");
+            FileOutputStream output = new FileOutputStream(file);
+
+            byte data[] = new byte[1024];
+
+            while ((count = input.read(data)) != -1) {
+                output.write(data, 0, count);
+            }
+
+            output.flush();
+            output.close();
+            input.close();
+            Log.d("FetchWord-audioFile", "arquivo mp3 baixado");
+        } catch (Exception e) {
+            Log.d("FetchWord-audioFile", "erro download");
+            e.printStackTrace();
+        }
     }
 }
