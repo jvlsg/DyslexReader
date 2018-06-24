@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static android.widget.Toast.makeText;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
@@ -43,17 +46,45 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setTheme(loadTheme());
         setContentView(R.layout.activity_main);
 
+
         /**
          * O textView será muito usado, então já coloca ele aqui
          */
         tvPreview = (TextView)findViewById(R.id.tvPreview);
         tvPreview.setMovementMethod(new ScrollingMovementMethod());
+
+        setBackground();
     }
 
     @Override
     protected void onDestroy(){
         super.onDestroy();
         android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    public void createToast(String text)
+    {
+        Toast t = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        TextView v = (TextView) t.getView().findViewById(android.R.id.message);
+        v.setBackgroundColor(Color.TRANSPARENT);
+        t.show();
+    }
+
+    public void setBackground()
+    {
+        if(currentAppTheme.equals(getString(R.string.themeValueLight)))
+        {
+            tvPreview.setBackgroundColor(getResources().getColor(R.color.colorTextView_light));
+            //tvPreview.setBackgroundColor(getResources().getColor(R.color.colorTextSuffix_dark));
+        }
+        else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
+        {
+            tvPreview.setBackgroundColor(getResources().getColor(R.color.colorTextView_dark));
+        }
+        else if (currentAppTheme.equals(getString(R.string.themeValueCustom)))
+        {
+            //TODO: Colocar o background custom aqui
+        }
     }
 
     public int loadTheme()
@@ -70,7 +101,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         {
             return R.style.AppTheme_Dark;
         }
-        return R.style.AppTheme_Dark;
+        else
+        {
+            //TODO: Colocar o tema custom
+            return R.style.AppTheme_Dark;
+        }
 
     }
 
@@ -91,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
         else
         {
-            Toast.makeText(this, R.string.toastSendError, Toast.LENGTH_SHORT).show();
+            createToast(getResources().getString(R.string.toastSendError));
+            //makeText(this, R.string.toastSendError, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -158,7 +194,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             {
                 currentAppTheme = getString(R.string.themeValueLight);
             }
+            else if(mode.equals(getString(R.string.themeValueCustom)))
+            {
+                currentAppTheme = getString(R.string.themeValueCustom);
+            }
             setTheme(loadTheme());
+            setBackground();
 
             //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
             recreate();
