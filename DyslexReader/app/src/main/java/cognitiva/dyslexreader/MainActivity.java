@@ -81,6 +81,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         {
             tvPreview.setBackgroundColor(getResources().getColor(R.color.colorTextView_dark));
         }
+        else if (currentAppTheme.equals(getString(R.string.themeValueCustom)))
+        {
+            //TODO: Colocar o background custom aqui
+        }
     }
 
     public int loadTheme()
@@ -97,7 +101,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         {
             return R.style.AppTheme_Dark;
         }
-        return R.style.AppTheme_Dark;
+        else
+        {
+            //TODO: Colocar o tema custom
+            return R.style.AppTheme_Dark;
+        }
 
     }
 
@@ -185,6 +193,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             else if(mode.equals(getString(R.string.themeValueLight)))
             {
                 currentAppTheme = getString(R.string.themeValueLight);
+            }
+            else if(mode.equals(getString(R.string.themeValueCustom)))
+            {
+                currentAppTheme = getString(R.string.themeValueCustom);
             }
             setTheme(loadTheme());
             setBackground();

@@ -50,7 +50,12 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         {
             return R.style.AppTheme_Dark;
         }
-        return R.style.AppTheme_Dark;
+        else
+        {
+            //TODO: Colocar o tema custom aqui
+            return R.style.AppTheme_Dark;
+        }
+
 
     }
 
@@ -66,6 +71,10 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
             else if(mode.equals(getString(R.string.themeValueLight)))
             {
                 currentAppTheme = getString(R.string.themeValueLight);
+            }
+            else
+            {
+                currentAppTheme = getString((R.string.themeValueCustom));
             }
             setTheme(loadTheme());
 

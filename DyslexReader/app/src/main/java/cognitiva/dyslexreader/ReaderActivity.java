@@ -178,8 +178,11 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         {
             return R.style.AppTheme_Dark;
         }
-        return R.style.AppTheme_Dark;
-
+        else
+        {
+            //TODO: colocar o tema custom aqui
+            return R.style.AppTheme_Dark;
+        }
     }
 
 
@@ -282,6 +285,10 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
             currentPrefixColor = getResources().getColor(R.color.colorTextPrefix_dark);
             currentSuffixColor = getResources().getColor(R.color.colorTextSuffix_dark);
             tvMainText.setBackgroundColor(getResources().getColor(R.color.colorTextView_dark));
+        }
+        if(currentAppTheme.equals(getString(R.string.themeValueCustom)))
+        {
+            //TODO: Colocar as coisas do tema custom
         }
 
     }
@@ -514,6 +521,11 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
             {
                 currentAppTheme = getString(R.string.themeValueLight);
             }
+            else
+            {
+                currentAppTheme = getString(R.string.themeValueCustom);
+            }
+
             setTheme(themeStyle());
             //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
             recreate();
