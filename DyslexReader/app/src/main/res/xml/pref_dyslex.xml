@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:asp="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreference
@@ -44,6 +45,44 @@
         asp:min="@integer/holdTimeMin"
         />
 
+    <com.thebluealliance.spectrum.SpectrumPreferenceCompat
+        android:defaultValue="@color/md_indigo_500"
+        android:key="@string/themeCustomTextKey"
+        android:title="@string/themeCustomTextTitle"
+        app:spectrum_colors="@array/colorsForCustomTheme"
+        app:spectrum_outlineWidth="2dp"/>
+    <com.thebluealliance.spectrum.SpectrumPreferenceCompat
+        android:defaultValue="@color/md_indigo_500"
+        android:key="@string/themeCustomBackgroundKey"
+        android:title="@string/themeCustomBackgroundTitle"
+        app:spectrum_colors="@array/colorsForCustomTheme"
+        app:spectrum_outlineWidth="2dp"/>
+    <com.thebluealliance.spectrum.SpectrumPreferenceCompat
+        android:defaultValue="@color/md_indigo_500"
+        android:key="@string/themeCustomTextviewBackgroundKey"
+        android:title="@string/themeCustomTextviewTitle"
+        app:spectrum_colors="@array/colorsForCustomTheme"
+        app:spectrum_outlineWidth="2dp"/>
 
+    <com.thebluealliance.spectrum.SpectrumPreferenceCompat
+        android:defaultValue="@color/md_indigo_500"
+        android:key="@string/themeCustomHighlightKey"
+        android:title="@string/themeCustomHighlightTitle"
+        app:spectrum_colors="@array/colorsForCustomTheme"
+        app:spectrum_outlineWidth="2dp"/>
+
+    <com.thebluealliance.spectrum.SpectrumPreferenceCompat
+        android:defaultValue="@color/md_indigo_500"
+        android:key="@string/themeCustomPrefixKey"
+        android:title="@string/themeCustomPrefixTitle"
+        app:spectrum_colors="@array/colorsForCustomTheme"
+        app:spectrum_outlineWidth="2dp"/>
+
+    <com.thebluealliance.spectrum.SpectrumPreferenceCompat
+        android:defaultValue="@color/md_indigo_500"
+        android:key="@string/themeCustomSuffixKey"
+        android:title="@string/themeCustomSuffixTitle"
+        app:spectrum_colors="@array/colorsForCustomTheme"
+        app:spectrum_outlineWidth="2dp"/>
 
 </PreferenceScreen>

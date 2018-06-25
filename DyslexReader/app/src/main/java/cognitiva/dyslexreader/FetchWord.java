@@ -21,17 +21,26 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class FetchWord extends AsyncTask<String, Void, Void> {
+public class FetchWord extends AsyncTask<String, Void, Word> {
 
     private static final String API_KEY = "33f1899bae9a7328fd0020ed3710587667a3c3fa92cade914";
 
     @Override
-    protected Void doInBackground(String... strings) {
+    protected Word doInBackground(String... strings) {
+
         ArrayList<Pair <String, String>> definitions = getDefinitions(strings[0]);
         Pair<String[], Integer> hyphenation = getHyphenation(strings[0]);
         String url = getAudioURL(strings[0]);
-        if (url != null) downloadAudioFile(strings[0], url);
-        return null;
+        Word word = null;
+
+        if ((url != null)
+                && (downloadAudioFile(strings[0], url))
+                && (definitions != null)
+                && (hyphenation != null)) {
+            word = new Word(strings[0].toLowerCase(), hyphenation, definitions);
+        }
+
+        return word;
     }
 
     private static  ArrayList<Pair <String, String>> getDefinitions(String word) {
@@ -235,7 +244,7 @@ public class FetchWord extends AsyncTask<String, Void, Void> {
         return url;
     }
 
-    private void downloadAudioFile(String word, String urlString) {
+    private boolean downloadAudioFile(String word, String urlString) {
         int count;
         try {
             URL url = new URL(urlString);
@@ -259,9 +268,12 @@ public class FetchWord extends AsyncTask<String, Void, Void> {
             output.close();
             input.close();
             Log.d("FetchWord-audioFile", "arquivo mp3 baixado");
+            return true;
         } catch (Exception e) {
             Log.d("FetchWord-audioFile", "erro download");
             e.printStackTrace();
         }
+
+        return false;
     }
 }

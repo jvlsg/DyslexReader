@@ -53,6 +53,29 @@
     <string name="themeValueDark" translatable="false">dark</string>
     <string name="themeValueCustom" translatable="false">custom</string>
 
+
+
+
+    <string name="themeCustomReminder">Remember to change the Theme to "Custom" to apply your theme</string>
+
+    <string name="themeCustomTextKey" translatable="false">customTextColor</string>
+    <string name="themeCustomTextTitle">Custom Text color</string>
+
+    <string name="themeCustomBackgroundKey" translatable="false">customBackgroundColor</string>
+    <string name="themeCustomBackgroundTitle">Custom Background color</string>
+
+    <string name="themeCustomTextviewBackgroundKey" translatable="false">customTextviewBackgroundColor</string>
+    <string name="themeCustomTextviewTitle">Custom Text background color</string>
+
+    <string name="themeCustomHighlightKey" translatable="false">customHighlightColor</string>
+    <string name="themeCustomHighlightTitle">Custom Highlight color</string>
+
+    <string name="themeCustomPrefixKey" translatable="false">customPrefixColor</string>
+    <string name="themeCustomPrefixTitle">Custom Prefix Color</string>
+
+    <string name="themeCustomSuffixKey" translatable="false">customSuffixColor</string>
+    <string name="themeCustomSuffixTitle">Custom Suffix Color</string>
+
     <string name="holdTimeKey" translatable="false">holdTime</string>
     <string name="holdTimeTitle">Hold Time</string>
     <string name="holdTimeSummary">Time in tenths of second to hold button for next/previous word</string>
