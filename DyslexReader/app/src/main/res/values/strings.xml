@@ -60,8 +60,11 @@
 
     <string name="themeCustomReminder">Remember to change the Theme to "Custom" to apply your theme</string>
 
-    <string name="themeCustomTextKey" translatable="false">customTextColor</string>
-    <string name="themeCustomTextTitle">Custom Text color</string>
+    <string name="themeCustomPrimaryTextKey" translatable="false">customPrimaryTextColor</string>
+    <string name="themeCustomPrimaryTextTitle">Custom Primary Text color</string>
+
+    <string name="themeCustomSecondaryTextKey" translatable="false">customSecondaryTextColor</string>
+    <string name="themeCustomSecondaryTextTitle">Custom Secondary Text color</string>
 
     <string name="themeCustomBackgroundKey" translatable="false">customBackgroundColor</string>
     <string name="themeCustomBackgroundTitle">Custom Background color</string>

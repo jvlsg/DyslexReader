@@ -47,8 +47,14 @@
 
     <com.thebluealliance.spectrum.SpectrumPreferenceCompat
         android:defaultValue="@color/md_indigo_500"
-        android:key="@string/themeCustomTextKey"
-        android:title="@string/themeCustomTextTitle"
+        android:key="@string/themeCustomPrimaryTextKey"
+        android:title="@string/themeCustomPrimaryTextTitle"
+        app:spectrum_colors="@array/colorsForCustomTheme"
+        app:spectrum_outlineWidth="2dp"/>
+    <com.thebluealliance.spectrum.SpectrumPreferenceCompat
+        android:defaultValue="@color/md_indigo_500"
+        android:key="@string/themeCustomSecondaryTextKey"
+        android:title="@string/themeCustomSecondaryTextTitle"
         app:spectrum_colors="@array/colorsForCustomTheme"
         app:spectrum_outlineWidth="2dp"/>
     <com.thebluealliance.spectrum.SpectrumPreferenceCompat
