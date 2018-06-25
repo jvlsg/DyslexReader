@@ -47,6 +47,8 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
     TextView tvMeaning;
     TextView tvPhonetics;
     Button btnPronunciation;
+    //Usada para Toast de erro caso nao haja audio para tocar
+    String audioErrMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         tvMeaning = (TextView) findViewById(R.id.tvDefinition);
         tvMeaning.setMovementMethod(new ScrollingMovementMethod());
         btnPronunciation = findViewById(R.id.btnPronunciation);
-
+        audioErrMsg = getResources().getString(R.string.errAudioNotAvailable);
         setBackground();
 
         Intent intent = getIntent();
@@ -197,40 +199,51 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             super.onPostExecute(word);
             if (word == null) {
                 Log.d("Word", "word null");
+                tvWord.setText(getString(R.string.errHyphenationNotAvailable));
+                tvMeaning.setText(getString(R.string.errDefinitionNotAvailable));
                 return;
             }
 
             //Concatena silabas com espaco entre elas
             Pair<String[], Integer> hyphenation = word.getHyphenation();
             StringBuilder builderHyph = new StringBuilder();
-            builderHyph.append(hyphenation.first[0]);
             String sAux;
-            for (int i = 1; i < hyphenation.first.length; ++i) {
-                sAux = " · " + hyphenation.first[i];
-                builderHyph.append(sAux);
+            if(hyphenation!=null && hyphenation.first.length>0) {
+                builderHyph.append(hyphenation.first[0]);
+                for (int i = 1; i < hyphenation.first.length; ++i) {
+                    sAux = " · " + hyphenation.first[i];
+                    builderHyph.append(sAux);
+                }
+                tvWord.setText(builderHyph.toString());
             }
-
-            tvWord.setText(builderHyph.toString());
+            else{
+                tvWord.setText(getString(R.string.errHyphenationNotAvailable));
+            }
 
             //Concatenas todas as definicoes em 1 string
             ArrayList<Pair<String, String>> definitions = word.getDefinitions();
-            StringBuilder builderDef = new StringBuilder();
-            String type, def;
-            for (int i = 0; i < definitions.size(); ++i) {
-                type = definitions.get(i).first;
-                def = definitions.get(i).second;
-                sAux = (i+1)+". ("+type+")\n"+def+"\n";
-                builderDef.append(sAux);
+            if(definitions != null && definitions.size()>0){
+                StringBuilder builderDef = new StringBuilder();
+                String type, def;
+                for (int i = 0; i < definitions.size(); ++i) {
+                    type = definitions.get(i).first;
+                    def = definitions.get(i).second;
+                    sAux = (i+1)+". ("+type+")\n"+def+"\n";
+                    builderDef.append(sAux);
+                }
+                tvMeaning.setText(builderDef.toString());
             }
-
-            tvMeaning.setText(builderDef.toString());
+            else{
+                tvMeaning.setText(getString(R.string.errDefinitionNotAvailable));
+            }
 
             btnPronunciation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MediaPlayer mp = MediaPlayer.create(v.getContext(), Uri.parse(Environment.getExternalStorageDirectory().getPath()+ "/dictionary/"+word.getWord()+".mp3"));
+                    MediaPlayer mp = MediaPlayer.create(v.getContext(), Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dictionary/" + word.getWord() + ".mp3"));
                     mp.setLooping(false);
                     mp.start();
+
                 }
             });
         }
@@ -394,10 +407,12 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
                     Log.d("FetchWord-audio", json);
                     return getAudioUrlJson(json);
                 } catch (IOException e) {
+                    Toast.makeText(getApplicationContext(), audioErrMsg, Toast.LENGTH_LONG);
                     Log.d("FetchWord-audio", "erro");
                     e.printStackTrace();
                 }
             } else {
+                Toast.makeText(getApplicationContext(), audioErrMsg, Toast.LENGTH_LONG);
                 Log.d("FetchWord-audio", "erro");
             }
 

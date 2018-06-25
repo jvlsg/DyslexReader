@@ -84,7 +84,16 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         else if (currentAppTheme.equals(getString(R.string.themeValueCustom)))
         {
             //TODO: Colocar o background custom aqui
+            //tvPreview.setBackgroundColor(getResources().getColor(R.));
         }
+    }
+
+    /**
+     * Usado para carregar o Tema custom pegando as cores das Preferences
+     * @param preferences referencia ao SharedPreferences para carregar as cores
+     */
+    public static void loadCustomTheme(SharedPreferences preferences){
+        //Color customBackground = preferences.get
     }
 
     public int loadTheme()
