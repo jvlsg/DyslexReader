@@ -14,6 +14,8 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     String currentAppTheme;
 
 
+
+
     //TODO: HOLDTIME
 
     @Override
@@ -53,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         else
         {
             //TODO: Colocar o tema custom aqui
-            return R.style.AppTheme_Dark;
+            return R.style.AppTheme_Light;
         }
 
 

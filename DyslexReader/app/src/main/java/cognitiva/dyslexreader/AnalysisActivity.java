@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -49,12 +50,14 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
     Button btnPronunciation;
     //Usada para Toast de erro caso nao haja audio para tocar
     String audioErrMsg;
+    ConstraintLayout constraintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(loadTheme());
+        loadTheme();
         setContentView(R.layout.activity_analysis);
+
 
         tvWord = (TextView) findViewById(R.id.tvSyllable);
         tvWord.setMovementMethod(new ScrollingMovementMethod());
@@ -62,6 +65,8 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         tvMeaning.setMovementMethod(new ScrollingMovementMethod());
         btnPronunciation = findViewById(R.id.btnPronunciation);
         audioErrMsg = getResources().getString(R.string.errAudioNotAvailable);
+        constraintLayout = (ConstraintLayout) findViewById(R.id.analyzeConstraintLayout);
+        loadTheme();
         setBackground();
 
         Intent intent = getIntent();
@@ -117,13 +122,9 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         {
             tvWord.setBackgroundColor(getResources().getColor(R.color.colorTextView_dark));
         }
-        else
-        {
-            //TODO: colocar o bacckground custom aqui
-        }
     }
 
-    public int loadTheme()
+    public void loadTheme()
     {
         SharedPreferences preferences = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
         currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
@@ -131,16 +132,20 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         String currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
         if(currentAppTheme.equals(getString(R.string.themeValueLight)))
         {
-            return R.style.AppTheme_Light;
+            setTheme(R.style.AppTheme_Light);
         }
         else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
         {
-            return R.style.AppTheme_Dark;
+            setTheme(R.style.AppTheme_Dark);
         }
         else
         {
+            MainActivity.setCustomTheme(preferences, this,
+                    new View[]{constraintLayout},
+                    new Button[] {btnPronunciation},
+                    new TextView[] {tvWord, tvMeaning, tvPhonetics});
             //TODO: Colocar o tema custom aqui
-            return R.style.AppTheme_Dark;
+            //return R.style.AppTheme_Dark;
         }
 
 
@@ -163,7 +168,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             {
                 currentAppTheme = getString(R.string.themeValueCustom);
             }
-            setTheme(loadTheme());
+            loadTheme();
             setBackground();
 
             //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
@@ -484,6 +489,8 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             return false;
         }
     }
+
+
 
 
 }
