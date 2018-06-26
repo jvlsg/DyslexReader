@@ -101,13 +101,13 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         themeStyle();
         setContentView(R.layout.activity_reader);
 
-        Button btnNextWord = (Button) findViewById(R.id.btnNextWord);
-        Button btnPreviousWord = (Button) findViewById(R.id.btnPreviousWord);
-        Button btnSettings = (Button) findViewById(R.id.btnSettings);
-        Button btnAnalyzeWord = (Button) findViewById(R.id.btnAnalyzeWord);
-        ProgressBar pbReadingProgress = (ProgressBar) findViewById(R.id.pbReadingProgress);
+        btnNextWord = (Button) findViewById(R.id.btnNextWord);
+        btnPreviousWord = (Button) findViewById(R.id.btnPreviousWord);
+        btnSettings = (Button) findViewById(R.id.btnSettings);
+        btnAnalyzeWord = (Button) findViewById(R.id.btnAnalyzeWord);
+        pbReadingProgress = (ProgressBar) findViewById(R.id.pbReadingProgress);
 
-        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.readerConstraintLayout);
+        constraintLayout = (ConstraintLayout) findViewById(R.id.readerConstraintLayout);
 
 
         tvMainText = (TextView) findViewById(R.id.tvMainText);
@@ -309,7 +309,7 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
             currentHighlightColor = preferences.getInt(this.getString(R.string.themeCustomHighlightKey), R.color.colorTextPrimary_light);
             currentPrefixColor = preferences.getInt(this.getString(R.string.themeCustomPrefixKey), R.color.colorTextPrimary_light);
             currentSuffixColor = preferences.getInt(this.getString(R.string.themeCustomSuffixKey), R.color.colorTextPrimary_light);
-            tvMainText.setBackgroundColor(preferences.getInt(this.getString(R.string.themeCustomBackgroundKey), R.color.colorTextPrimary_light));
+            //tvMainText.setBackgroundColor(preferences.getInt(this.getString(R.string.themeCustomBackgroundKey), R.color.colorTextPrimary_light));
             //TODO: Colocar as coisas do tema custom
         }
 
