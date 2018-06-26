@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadTheme();
         setContentView(R.layout.activity_main);
 
         /**
@@ -61,7 +62,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         btnCamera = (Button)findViewById(R.id.btnCamera);
         btnSettings = (Button)findViewById(R.id.btnSettings);
         constraintLayout = (ConstraintLayout)findViewById(R.id.mainConstraintLayout);
+
         loadTheme();
+        setTextViewBackground();
 
         tvPreview.setMovementMethod(new ScrollingMovementMethod());
 
@@ -100,17 +103,17 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         SharedPreferences preferences = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
         currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
         preferences.registerOnSharedPreferenceChangeListener(this);
-        String currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
+        //String currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
 
         if(currentAppTheme.equals(getString(R.string.themeValueLight)))
         {
             setTheme(R.style.AppTheme_Light);
-            setTextViewBackground();
+            //setTextViewBackground();
         }
         else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
         {
             setTheme(R.style.AppTheme_Dark);
-            setTextViewBackground();
+            //setTextViewBackground();
         }
         else
         {
@@ -119,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     new Button[] {btnReader, btnFile, btnPaste, btnCamera, btnSettings},
                     new TextView[] {tvPreview});
         }
-
     }
 
     /**
@@ -253,6 +255,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 currentAppTheme = getString(R.string.themeValueCustom);
             }
             loadTheme();
+            setTextViewBackground();
 
             //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
             recreate();
@@ -270,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             System.out.println("CHAMOU");
 
             loadTheme();
+            setTextViewBackground();
             recreate();
         }
     }
