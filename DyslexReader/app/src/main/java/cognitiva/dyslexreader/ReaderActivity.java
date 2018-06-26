@@ -12,6 +12,9 @@ import android.text.Spannable;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -103,7 +106,6 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
 
         btnNextWord = (Button) findViewById(R.id.btnNextWord);
         btnPreviousWord = (Button) findViewById(R.id.btnPreviousWord);
-        btnSettings = (Button) findViewById(R.id.btnSettings);
         btnAnalyzeWord = (Button) findViewById(R.id.btnAnalyzeWord);
         pbReadingProgress = (ProgressBar) findViewById(R.id.pbReadingProgress);
 
@@ -555,6 +557,28 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.action_setting:
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 }

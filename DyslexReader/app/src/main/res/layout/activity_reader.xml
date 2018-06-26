@@ -15,56 +15,61 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:background="@android:drawable/editbox_background"
-        android:scrollbars = "vertical"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnNextWord"
         android:layout_width="85dp"
-        android:layout_height="75dp"
+        android:layout_height="95dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        android:drawableTop="@mipmap/next_icon"
         android:text="@string/btnNextWordLabel"
+        android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pbReadingProgress" />
 
     <Button
         android:id="@+id/btnPreviousWord"
         android:layout_width="85dp"
-        android:layout_height="75dp"
+        android:layout_height="95dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:drawableTop="@mipmap/previous_icon"
         android:text="@string/btnPreviousWordLabel"
+        android:textSize="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pbReadingProgress" />
 
-    <Button
-        android:id="@+id/btnSettings"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="onClickSettings"
-        android:text="@string/btnSettingsLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--<Button-->
+        <!--android:id="@+id/btnSettings"-->
+        <!--android:layout_width="64dp"-->
+        <!--android:layout_height="64dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:onClick="onClickSettings"-->
+        <!--android:text="@string/btnSettingsLabel"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
     <Button
         android:id="@+id/btnAnalyzeWord"
         android:layout_width="wrap_content"
-        android:layout_height="75dp"
+        android:layout_height="95dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:drawableTop="@mipmap/help_icon"
         android:onClick="onClickAnalyze"
         android:text="@string/btnAnalyzeWordLabel"
         app:layout_constraintEnd_toStartOf="@+id/btnNextWord"

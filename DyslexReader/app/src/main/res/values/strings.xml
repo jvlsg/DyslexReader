@@ -3,7 +3,7 @@
 
     <!-- MAIN ACTIVITY  -->
     <string name="btnReaderLabel">Read</string>
-    <string name="btnFileLabel">File</string>
+    <string name="btnFileLabel">Web</string>
     <string name="btnCameraLabel">Camera</string>
     <string name="btnPasteLabel">Paste</string>
     <string name="btnSettingsLabel">Settings</string>
@@ -18,7 +18,7 @@
     <!-- ANALYSIS ACTIVITY  -->
     <string name="wordToAnalyzeKey">WordToAnalyze</string>
     <string name="btnPronunciationLabel">Play sound</string>
-    <string name="file">FILE</string>
+    <string name="file">WEB</string>
     <string name="errHyphenationNotAvailable">Hyphenation not Available</string>
     <string name="errDefinitionNotAvailable">Definition not Available</string>
     <string name="errAudioNotAvailable">Audio not Available</string>
@@ -84,4 +84,6 @@
     <string name="holdTimeKey" translatable="false">holdTime</string>
     <string name="holdTimeTitle">Hold Time</string>
     <string name="holdTimeSummary">Time in tenths of second to hold button for next/previous word</string>
+
+    <string name="settingsButton">Setings</string>
 </resources>
