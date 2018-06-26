@@ -23,13 +23,15 @@
         <activity android:name=".ReaderActivity"
             android:launchMode="singleTop"/>
         <activity android:name=".AnalysisActivity"
-            android:parentActivityName=".ReaderActivity" />
+            android:parentActivityName=".ReaderActivity"></activity>
+        <activity android:name=".CameraActivity"
+        android:parentActivityName=".MainActivity"></activity>
 
         <activity
             android:name=".SettingsActivity"
             android:label="@string/settingsLabel" />
-
-
+        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="ocr"/>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 </manifest>

@@ -30,6 +30,11 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
 
     implementation 'com.android.support:preference-v7:27.1.1'
+    implementation files('libs/boilerpipe-1.2.0-android.jar')
+    implementation files('libs/nekohtml-1.9.13.jar')
+    implementation files('libs/xerces-2.9.1.jar')
+    implementation 'com.google.android.gms:play-services-vision:11.0.4'
+
 
     androidTestImplementation 'com.android.support:support-annotations:27.1.1'
     implementation 'com.thebluealliance:spectrum:0.7.1'
