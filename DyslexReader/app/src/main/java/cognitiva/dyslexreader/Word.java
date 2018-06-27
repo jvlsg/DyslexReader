@@ -9,12 +9,14 @@ public class Word {
     private String word;
     private Pair<String[], Integer> hyphenation;
     private ArrayList<Pair<String, String>> definitions;
+    private String pronunciation;
     private boolean audio;
 
-    public Word(String word, Pair<String[], Integer> hyphenation, ArrayList<Pair <String, String>> definitions, boolean audio) {
+    public Word(String word, Pair<String[], Integer> hyphenation, ArrayList<Pair <String, String>> definitions, String pronunciation, boolean audio) {
         this.word = word;
         this.hyphenation = hyphenation;
         this.definitions = definitions;
+        this.pronunciation = pronunciation;
         this.audio = audio;
     }
 
@@ -59,5 +61,17 @@ public class Word {
 
     public void setAudio(boolean audio) {
         this.audio = audio;
+    }
+
+    public boolean hasPronunciation() {
+        return (pronunciation != null);
+    }
+
+    public String getPronunciation() {
+        return pronunciation;
+    }
+
+    public void setPronunciation(String pronunciation) {
+        this.pronunciation = pronunciation;
     }
 }

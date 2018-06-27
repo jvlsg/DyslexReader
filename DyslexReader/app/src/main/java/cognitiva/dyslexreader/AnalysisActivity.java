@@ -40,6 +40,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -62,10 +64,13 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
     String audioErrMsg;
     ConstraintLayout constraintLayout;
 
+    private static Map<String, String> arpaToIpa = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadTheme();
+        populateIpaMap();
         setContentView(R.layout.activity_analysis);
 
 
@@ -218,6 +223,104 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         }
     }
 
+    private static void populateIpaMap() {
+        if (arpaToIpa != null) return;
+
+        arpaToIpa = new HashMap<>();
+        
+        arpaToIpa.put("AO", "ɔ");
+        arpaToIpa.put("AO0", "ɔ");
+        arpaToIpa.put("AO1", "ɔ");
+        arpaToIpa.put("AO2", "ɔ");
+        arpaToIpa.put("AA", "ɑ");
+        arpaToIpa.put("AA0", "ɑ");
+        arpaToIpa.put("AA1", "ɑ");
+        arpaToIpa.put("AA2", "ɑ");
+        arpaToIpa.put("IY", "i");
+        arpaToIpa.put("IY0", "i");
+        arpaToIpa.put("IY1", "i");
+        arpaToIpa.put("IY2", "i");
+        arpaToIpa.put("UW", "u");
+        arpaToIpa.put("UW0", "u");
+        arpaToIpa.put("UW1", "u");
+        arpaToIpa.put("UW2", "u");
+        arpaToIpa.put("EH", "e");
+        arpaToIpa.put("EH0", "e");
+        arpaToIpa.put("EH1", "e");
+        arpaToIpa.put("EH2", "e");
+        arpaToIpa.put("IH", "ɪ");
+        arpaToIpa.put("IH0", "ɪ");
+        arpaToIpa.put("IH1", "ɪ");
+        arpaToIpa.put("IH2", "ɪ");
+        arpaToIpa.put("UH", "ʊ");
+        arpaToIpa.put("UH0", "ʊ");
+        arpaToIpa.put("UH1", "ʊ");
+        arpaToIpa.put("UH2", "ʊ");
+        arpaToIpa.put("AH", "ʌ");
+        arpaToIpa.put("AH0", "ə");
+        arpaToIpa.put("AH1", "ʌ");
+        arpaToIpa.put("AH2", "ʌ");
+        arpaToIpa.put("AE", "æ");
+        arpaToIpa.put("AE0", "æ");
+        arpaToIpa.put("AE1", "æ");
+        arpaToIpa.put("AE2", "æ");
+        arpaToIpa.put("AX", "ə");
+        arpaToIpa.put("AX0", "ə");
+        arpaToIpa.put("AX1", "ə");
+        arpaToIpa.put("AX2", "ə");
+        arpaToIpa.put("EY", "eɪ");
+        arpaToIpa.put("EY0", "eɪ");
+        arpaToIpa.put("EY1", "eɪ");
+        arpaToIpa.put("EY2", "eɪ");
+        arpaToIpa.put("AY", "aɪ");
+        arpaToIpa.put("AY0", "aɪ");
+        arpaToIpa.put("AY1", "aɪ");
+        arpaToIpa.put("AY2", "aɪ");
+        arpaToIpa.put("OW", "oʊ");
+        arpaToIpa.put("OW0", "oʊ");
+        arpaToIpa.put("OW1", "oʊ");
+        arpaToIpa.put("OW2", "oʊ");
+        arpaToIpa.put("AW", "aʊ");
+        arpaToIpa.put("AW0", "aʊ");
+        arpaToIpa.put("AW1", "aʊ");
+        arpaToIpa.put("AW2", "aʊ");
+        arpaToIpa.put("OY", "ɔɪ");
+        arpaToIpa.put("OY0", "ɔɪ");
+        arpaToIpa.put("OY1", "ɔɪ");
+        arpaToIpa.put("OY2", "ɔɪ");
+        arpaToIpa.put("P", "p");
+        arpaToIpa.put("B", "b");
+        arpaToIpa.put("T", "t");
+        arpaToIpa.put("D", "d");
+        arpaToIpa.put("K", "k");
+        arpaToIpa.put("G", "g");
+        arpaToIpa.put("CH", "tʃ");
+        arpaToIpa.put("JH", "dʒ");
+        arpaToIpa.put("F", "f");
+        arpaToIpa.put("V", "v");
+        arpaToIpa.put("TH", "θ");
+        arpaToIpa.put("DH", "ð");
+        arpaToIpa.put("S", "s");
+        arpaToIpa.put("Z", "z");
+        arpaToIpa.put("SH", "ʃ");
+        arpaToIpa.put("ZH", "ʒ");
+        arpaToIpa.put("HH", "h");
+        arpaToIpa.put("M", "m");
+        arpaToIpa.put("N", "n");
+        arpaToIpa.put("NG", "ŋ");
+        arpaToIpa.put("L", "l");
+        arpaToIpa.put("R", "r");
+        arpaToIpa.put("ER", "ɜr");
+        arpaToIpa.put("ER0", "ɜr");
+        arpaToIpa.put("ER1", "ɜr");
+        arpaToIpa.put("ER2", "ɜr");
+        arpaToIpa.put("AXR", "ər");
+        arpaToIpa.put("AXR0", "ər");
+        arpaToIpa.put("AXR1", "ər");
+        arpaToIpa.put("AXR2", "ər");
+        arpaToIpa.put("W", "w");
+    }
+
     public class FetchWord extends AsyncTask<String, Void, Word> {
 
         private static final String API_KEY = "33f1899bae9a7328fd0020ed3710587667a3c3fa92cade914";
@@ -239,20 +342,23 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
 
         @Override
         protected Word doInBackground(String... strings) {
-
-            ArrayList<Pair<String, String>> definitions = getDefinitions(strings[0]);
-            Pair<String[], Integer> hyphenation = getHyphenation(strings[0]);
-            String url = getAudioURL(strings[0]);
-            Word word = null;
             w = strings[0];
+
+            ArrayList<Pair<String, String>> definitions = getDefinitions(w);
+            Pair<String[], Integer> hyphenation = getHyphenation(w);
+            String url = getAudioURL(w);
+            Word word = null;
+            String pronunciation = getPronunciation(w);
+            pronunciation = convertToIpa(pronunciation);
+
             if (strings.length > 1) last = true;
 
-            boolean audio = downloadAudioFile(strings[0], url);
+            boolean audio = downloadAudioFile(w, url);
 
             if ((url != null)
                     && (definitions != null)
                     && (hyphenation != null)) {
-                word = new Word(strings[0].toLowerCase(), hyphenation, definitions, audio);
+                word = new Word(strings[0].toLowerCase(), hyphenation, definitions, pronunciation, audio);
             }
 
             return word;
@@ -325,9 +431,16 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
                 btnPronunciation.setVisibility(View.VISIBLE);
             }
 
+
+            if (word.hasPronunciation()) {
+                tvPhonetics.setText(word.getPronunciation());
+            } else {
+                tvPhonetics.setText("Pronunciation not available");
+            }
+
             //set visibilities after loading
             tvWord.setVisibility(View.VISIBLE);
-            //tvPhonetics.setVisibility(View.VISIBLE);
+            tvPhonetics.setVisibility(View.VISIBLE);
             tvMeaning.setVisibility(View.VISIBLE);
             pbLoading.setVisibility(View.INVISIBLE);
             imgWordnik.setVisibility(View.VISIBLE);
@@ -472,6 +585,81 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             return Pair.create(syllable, stress);
         }
 
+        private String getPronunciation(String word) {
+            Response response = null;
+
+            String url = "https://api.wordnik.com/v4/word.json/" + word.toLowerCase() +
+                    "/pronunciations?useCanonical=false&sourceDictionary=cmu&limit=3&api_key=" + API_KEY;
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder().url(url).build();
+
+            try {
+                response = client.newCall(request).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (response != null) {
+                try {
+                    String json = response.body().string();
+                    Log.d("FetchWord-pron", json);
+                    return getPronunciationJson(json);
+                } catch (IOException e) {
+                    Log.d("FetchWord-pron", "erro");
+                    e.printStackTrace();
+                }
+            } else {
+                Log.d("FetchWord-pron", "erro");
+            }
+
+            return null;
+        }
+
+        private String getPronunciationJson(String jsonString) {
+            JSONArray json = null;
+            JSONObject pron = null;
+            String arpabet;
+
+            try {
+                json = new JSONArray(jsonString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+            try {
+                pron = json.getJSONObject(0);
+                arpabet = pron.getString("rawType");
+                if (!arpabet.equals("arpabet"))
+                    return null;
+                arpabet = pron.getString("raw");
+                Log.d("FetchWord-pronJSON", arpabet);
+            } catch (JSONException e) {
+                Log.d("FetchWord-pronJSON", "erro json");
+                e.printStackTrace();
+                return null;
+            }
+
+            return arpabet;
+        }
+
+        private String convertToIpa(String pronunciation) {
+            if (pronunciation == null) return null;
+            StringBuilder builder = new StringBuilder();
+            String sAux;
+
+            String[] split = pronunciation.split(" ");
+
+            builder.append("/");
+            for (String phonetic : split) {
+                sAux = arpaToIpa.get(phonetic);
+                builder.append(" " + (sAux == null ? phonetic : sAux) + " ");
+            }
+            builder.append("/");
+            return builder.toString();
+        }
+
         private String getAudioURL(String word) {
             Response response = null;
 
@@ -493,12 +681,12 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
                     Log.d("FetchWord-audio", json);
                     return getAudioUrlJson(json);
                 } catch (IOException e) {
-                    Toast.makeText(getApplicationContext(), audioErrMsg, Toast.LENGTH_LONG);
+                    if (last) Toast.makeText(getApplicationContext(), audioErrMsg, Toast.LENGTH_LONG);
                     Log.d("FetchWord-audio", "erro");
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), audioErrMsg, Toast.LENGTH_LONG);
+                if (last) Toast.makeText(getApplicationContext(), audioErrMsg, Toast.LENGTH_LONG);
                 Log.d("FetchWord-audio", "erro");
             }
 
@@ -517,22 +705,16 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
                 return null;
             }
 
-            if (json != null) {
-
-                try {
-                    def = json.getJSONObject(0);
-                    url = def.getString("fileUrl");
-                    Log.d("FetchWord-audioURL", url);
-                } catch (JSONException e) {
-                    Log.d("FetchWord-audioURL", "erro json");
-                    e.printStackTrace();
-                    return null;
-                }
-
-            } else {
+            try {
+                def = json.getJSONObject(0);
+                url = def.getString("fileUrl");
+                Log.d("FetchWord-audioURL", url);
+            } catch (JSONException e) {
                 Log.d("FetchWord-audioURL", "erro json");
+                e.printStackTrace();
                 return null;
             }
+
 
             return url;
         }
