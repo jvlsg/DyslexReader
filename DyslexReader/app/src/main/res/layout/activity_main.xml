@@ -74,6 +74,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/btnCameraLabel"
+        android:onClick="onClickCamera"
         android:drawableTop="@mipmap/camera_icon"
         app:layout_constraintStart_toEndOf="@+id/btnPaste"
         app:layout_constraintTop_toBottomOf="@+id/tvPreview" />
