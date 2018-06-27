@@ -179,6 +179,16 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mp = MediaPlayer.create(this, R.raw.whitenoise);
+        mp.setLooping(true);
+        playWhiteNoise();
+
+    }
+
+
     //FUnção que coloca o tema na interface
     public void themeStyle()
     {
@@ -320,12 +330,15 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
 
     public void playWhiteNoise()
     {
+        System.out.println("playWhiteNoise");
         if(switchWhiteNoise == true)
         {
+            System.out.println("PLAY");
             mp.start();
         }
         else
         {
+            System.out.println("STOP");
             mp.stop();
         }
     }
@@ -517,7 +530,7 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         ///WHITE NOISE
         if(key.equals(getString(R.string.whiteNoiseKey))){
             switchWhiteNoise = sharedPreferences.getBoolean(key,false);
-            //playWhiteNoise();
+            playWhiteNoise();
         }
         ///HOLD TIME
         if(key.equals(getString(R.string.holdTimeKey))){
