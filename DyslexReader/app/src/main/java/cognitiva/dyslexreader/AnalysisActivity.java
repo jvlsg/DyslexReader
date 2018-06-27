@@ -466,6 +466,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             if (response != null) {
                 try {
                     String json = response.body().string();
+                    response.close();
                     Log.d("FetchWord-definition", json);
                     return getDefinitionsJSON(json);
                 } catch (IOException e) {
@@ -532,6 +533,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             if (response != null) {
                 try {
                     String json = response.body().string();
+                    response.close();
                     Log.d("FetchWord-hyphenation", json);
                     return getHyphenationJSON(json);
                 } catch (IOException e) {
@@ -604,6 +606,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
                 try {
                     String json = response.body().string();
                     Log.d("FetchWord-pron", json);
+                    response.close();
                     return getPronunciationJson(json);
                 } catch (IOException e) {
                     Log.d("FetchWord-pron", "erro");
@@ -679,6 +682,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
                 try {
                     String json = response.body().string();
                     Log.d("FetchWord-audio", json);
+                    response.close();
                     return getAudioUrlJson(json);
                 } catch (IOException e) {
                     if (last) Toast.makeText(getApplicationContext(), audioErrMsg, Toast.LENGTH_LONG);
