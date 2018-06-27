@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name">DyslexReader</string>
+
+    <!-- MAIN ACTIVITY  -->
+    <string name="btnReaderLabel">Ler</string>
+    <string name="btnFileLabel">Web</string>
+    <string name="btnCameraLabel">Câmera</string>
+    <string name="btnPasteLabel">Colar</string>
+    <string name="btnSettingsLabel">Configurações</string>
+    <string name="toastSendError">Selecione algum texto antes de enviar para o Leitor</string>
+    <string name="tvPreviewHint">This window will show the text that will be modified.</string>
+
+    <!-- READER ACTIVITY  -->
+    <string name="btnNextWordLabel">Prox. Palavra</string>
+    <string name="btnPreviousWordLabel">Palavra Ant.</string>
+    <string name="btnAnalyzeWordLabel">Analizar</string>
+
+    <!--CAMERA ACTIVITY-->
+
+    <string name="btnTakePhoto">Tirar foto</string>
+    <string name="btnTakeText">Pegar texto</string>
+
+    <!-- ANALYSIS ACTIVITY  -->
+    <string name="wordToAnalyzeKey">WordToAnalyze</string>
+    <string name="btnPronunciationLabel">Tocar som</string>
+    <string name="file">WEB</string>
+    <string name="errHyphenationNotAvailable">Hifenização não disponível</string>
+    <string name="errDefinitionNotAvailable">Definiçãao não disponível</string>
+    <string name="errAudioNotAvailable">Áudio não disponível</string>
+
+
+    <!-- SETTINGS ACTIVITY -->
+    <string name="settingsLabel">Configuração</string>
+
+    <string name="whiteNoiseKey" translatable="false">whiteNoise</string>
+    <string name="whiteNoiseTitle">Tocar ruído branco</string>
+    <string name="whiteNoiseSummary">Tocar ruído branco para diminuir distrações sonoras</string>
+
+    <string name="firstLastColorsKey" translatable="false">firstLastColors</string>
+    <string name="firstLastColorsTitle">Mudar a cor do sufixo e prefixo</string>
+    <string name="firstLastColorsSummary">Muda as cores da primeira e últim letra da palavra</string>
+
+    <string name="readingModeKey" translatable="false">readingMode</string>
+    <string name="readingModeTitle">Modo de leitura</string>
+    <string name="readingModeSummary">Escolher o modo de leitura</string>
+    <string name="readingModeDialog">Escolher o modo de leitura</string>
+    <string name="readingModeLabelHighlight">Realce</string>
+    <string name="readingModeLabelWordByWord">Palavra por Palavra</string>
+    <string name="readingModeValueHighlight" translatable="false">highlight</string>
+    <string name="readingModeValueWordByWord" translatable="false">wordByWord</string>
+
+    <string name="themeKey" translatable="false">theme</string>
+    <string name="themeTitle">Tema</string>
+    <string name="themeSummary">Muda a aparência visual</string>
+    <string name="themeDialog">Escolha seu tema</string>
+    <string name="themeLabelLight">Claro</string>
+    <string name="themeLabelDark">Escuro</string>
+    <string name="themeLabelCustom">Customizado</string>
+    <string name="themeValueLight" translatable="false">light</string>
+    <string name="themeValueDark" translatable="false">dark</string>
+    <string name="themeValueCustom" translatable="false">custom</string>
+
+
+
+
+    <string name="themeCustomReminder">Lembre-se de mudar o tema para customizado para aplicar as mudanças</string>
+
+    <string name="themeCustomPrimaryTextKey" translatable="false">customPrimaryTextColor</string>
+    <string name="themeCustomPrimaryTextTitle">Cor de texto primária customizado</string>
+
+    <string name="themeCustomSecondaryTextKey" translatable="false">customSecondaryTextColor</string>
+    <string name="themeCustomSecondaryTextTitle">Cor de texto secundária customizado</string>
+
+    <string name="themeCustomBackgroundKey" translatable="false">customBackgroundColor</string>
+    <string name="themeCustomBackgroundTitle">Cor do fundo customizado</string>
+
+    <string name="themeCustomTextviewBackgroundKey" translatable="false">customTextviewBackgroundColor</string>
+    <string name="themeCustomTextviewTitle">Cor do fundo do texto customizado</string>
+
+    <string name="themeCustomHighlightKey" translatable="false">customHighlightColor</string>
+    <string name="themeCustomHighlightTitle">Cor do realce customizado</string>
+
+    <string name="themeCustomPrefixKey" translatable="false">customPrefixColor</string>
+    <string name="themeCustomPrefixTitle">Cor do prefixo customizado</string>
+
+    <string name="themeCustomSuffixKey" translatable="false">customSuffixColor</string>
+    <string name="themeCustomSuffixTitle">Cor do sufixo customizado</string>
+
+    <string name="holdTimeKey" translatable="false">holdTime</string>
+    <string name="holdTimeTitle">Tempo de segurar</string>
+    <string name="holdTimeSummary">Tempo em décimo de segundo que é necessário para mudar de palavra ao segurar o botão de próximo ou anterior</string>
+
+    <string name="settingsButton">Configurações</string>
+</resources>

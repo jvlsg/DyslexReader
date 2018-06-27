@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/tvSyllable"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="33dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -29,20 +29,20 @@
         android:layout_height="23dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        tools:text="/ˌlɔː.ɹəm //ˌlɔː.ɹəm //ˌlɔː.ɹəm /"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/tvSyllable"
-        app:layout_constraintTop_toBottomOf="@+id/tvSyllable" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSyllable"
+        tools:text="/ˌlɔː.ɹəm //ˌlɔː.ɹəm //ˌlɔː.ɹəm /" />
 
     <TextView
         android:id="@+id/tvDefinition"
         android:layout_width="0dp"
-        android:layout_height="252dp"
+        android:layout_height="116dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPhonetics"
