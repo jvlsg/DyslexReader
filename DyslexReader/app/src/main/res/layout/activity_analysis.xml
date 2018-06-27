@@ -18,6 +18,7 @@
         android:layout_marginTop="8dp"
         android:background="@android:drawable/editbox_background"
         android:gravity="center"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,9 +31,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        tools:text="/ˌlɔː.ɹəm //ˌlɔː.ɹəm //ˌlɔː.ɹəm /"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/tvSyllable"
-        app:layout_constraintTop_toBottomOf="@+id/tvSyllable" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSyllable"
+        tools:text="/ˌlɔː.ɹəm //ˌlɔː.ɹəm //ˌlɔː.ɹəm /" />
 
     <TextView
         android:id="@+id/tvDefinition"
@@ -43,6 +45,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPhonetics"

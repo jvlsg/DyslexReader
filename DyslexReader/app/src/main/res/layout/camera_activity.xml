@@ -18,7 +18,7 @@
         android:layout_height="0dp"
         android:layout_margin="8dp"
         android:layout_weight="5"
-        android:gravity="center"
+        android:gravity="top|left"
         android:text=""
         android:textColor="@android:color/black"
         android:textSize="20sp"
@@ -30,12 +30,13 @@
         android:layout_weight="4"
         android:orientation="horizontal">
 
+        <!--
         <Button
             android:id="@+id/btnTakeTextFromCamera"
             android:layout_width="148dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/btnTakeText" />
+            android:text="@string/btnTakeText" />-->
 
         <Button
             android:id="@+id/btnTakeImageFromCamera"
@@ -43,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onClickGetTextCamera"
-            android:text="@string/btnTakePhoto" />
+            android:text="@string/btnTakeText" />
     </LinearLayout>
 
 </LinearLayout>
