@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:ems="15"
         android:hint="@string/tvLinkHint"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:text="" />
 
     <LinearLayout
