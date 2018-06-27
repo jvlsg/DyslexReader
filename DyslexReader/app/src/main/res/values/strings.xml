@@ -15,6 +15,11 @@
     <string name="btnPreviousWordLabel">Palavra Ant.</string>
     <string name="btnAnalyzeWordLabel">Analyze</string>
 
+    <!--CAMERA ACTIVITY-->
+
+    <string name="btnTakePhoto">Take photo</string>
+    <string name="btnTakeText">Take text</string>
+
     <!-- ANALYSIS ACTIVITY  -->
     <string name="wordToAnalyzeKey">WordToAnalyze</string>
     <string name="btnPronunciationLabel">Play sound</string>
