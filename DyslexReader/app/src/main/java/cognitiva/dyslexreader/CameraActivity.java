@@ -1,7 +1,9 @@
 package cognitiva.dyslexreader;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PixelFormat;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +12,9 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.TextView;
+
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
@@ -21,9 +25,10 @@ import java.io.IOException;
 public class CameraActivity extends AppCompatActivity {
 
     SurfaceView mCameraView;
+    TextView mTextView;
     CameraSource mCameraSource;
 
-    private static final String TAG = "CameraActivity";
+    private static final String TAG = "MainActivity";
     private static final int requestPermissionID = 101;
 
     @Override
@@ -32,7 +37,7 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.camera_activity);
 
         mCameraView = findViewById(R.id.surfaceView);
-
+        mTextView = findViewById(R.id.text_view);
         startCameraSource();
     }
 
@@ -49,12 +54,21 @@ public class CameraActivity extends AppCompatActivity {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
+                mCameraView.setZOrderMediaOverlay(true);
+                mCameraView.getHolder().setFormat(PixelFormat.TRANSPARENT);
                 mCameraSource.start(mCameraView.getHolder());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+    public void onClickGetTextCamera(View v) {
+        Intent intent = new Intent();
+        intent.putExtra("TEXT_CAMERA", mTextView.getText().toString());
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
 
     private void startCameraSource() {
 
@@ -112,24 +126,16 @@ public class CameraActivity extends AppCompatActivity {
                 public void release() {
                 }
 
-
+                /**
+                 * Detect all the text from camera using TextBlock and the values into a stringBuilder
+                 * which will then be set to the textView.
+                 * */
                 @Override
                 public void receiveDetections(Detector.Detections<TextBlock> detections) {
                     final SparseArray<TextBlock> items = detections.getDetectedItems();
                     if (items.size() != 0 ){
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for(int i=0;i<items.size();i++) {
-                            TextBlock item = items.valueAt(i);
-                            stringBuilder.append(item.getValue());
-                            stringBuilder.append("\n");
-                        }
 
-                        Intent intent = new Intent();
-                        intent.putExtra("TEXT_CAMERA", stringBuilder.toString());
-                        setResult(RESULT_OK, intent);
-                        finish();
-
-                        /*mTextView.post(new Runnable() {
+                        mTextView.post(new Runnable() {
                             @Override
                             public void run() {
                                 StringBuilder stringBuilder = new StringBuilder();
@@ -137,10 +143,11 @@ public class CameraActivity extends AppCompatActivity {
                                     TextBlock item = items.valueAt(i);
                                     stringBuilder.append(item.getValue());
                                     stringBuilder.append("\n");
+
                                 }
                                 mTextView.setText(stringBuilder.toString());
                             }
-                        });*/
+                        });
                     }
                 }
             });

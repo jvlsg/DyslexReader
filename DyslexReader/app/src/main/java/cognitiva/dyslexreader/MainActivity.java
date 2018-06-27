@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.StrictMode;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -36,10 +35,7 @@ import java.net.URL;
 import de.l3s.boilerpipe.BoilerpipeProcessingException;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
-
-import static android.widget.Toast.makeText;
-
-public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class MainActivity extends AppCompatActivity {
 
     //Button to ReaderActivity
     Button btnReader;
@@ -52,8 +48,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     TextView tvPreview;
     private PopupWindow mPopupWindow;
     private static final int CAMERA_ACTIVITY_CODE = 311;
-
-    String currentAppTheme;
 
 
     /***
@@ -68,9 +62,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(loadTheme());
         setContentView(R.layout.activity_main);
-
 
         /**
          * O textView será muito usado, então já coloca ele aqui
@@ -81,63 +73,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         //utilizado no httpParser
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-        setBackground();
     }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    public void createToast(String text)
-    {
-        Toast t = Toast.makeText(this, text, Toast.LENGTH_SHORT);
-        TextView v = (TextView) t.getView().findViewById(android.R.id.message);
-        v.setBackgroundColor(Color.TRANSPARENT);
-        t.show();
-    }
-
-    public void setBackground()
-    {
-        if(currentAppTheme.equals(getString(R.string.themeValueLight)))
-        {
-            tvPreview.setBackgroundColor(getResources().getColor(R.color.colorTextView_light));
-            //tvPreview.setBackgroundColor(getResources().getColor(R.color.colorTextSuffix_dark));
-        }
-        else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
-        {
-            tvPreview.setBackgroundColor(getResources().getColor(R.color.colorTextView_dark));
-        }
-        else if (currentAppTheme.equals(getString(R.string.themeValueCustom)))
-        {
-            //TODO: Colocar o background custom aqui
-        }
-    }
-
-    public int loadTheme()
-    {
-        SharedPreferences preferences = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
-        currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
-        preferences.registerOnSharedPreferenceChangeListener(this);
-        String currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
-        if(currentAppTheme.equals(getString(R.string.themeValueLight)))
-        {
-            return R.style.AppTheme_Light;
-        }
-        else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
-        {
-            return R.style.AppTheme_Dark;
-        }
-        else
-        {
-            //TODO: Colocar o tema custom
-            return R.style.AppTheme_Dark;
-        }
-
-    }
-
 
 
     /***
@@ -155,8 +91,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
         else
         {
-            createToast(getResources().getString(R.string.toastSendError));
-            //makeText(this, R.string.toastSendError, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toastSendError, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -230,34 +165,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
     }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals(getString(R.string.themeKey)))
-        {
-            String mode = sharedPreferences.getString(key, getString(R.string.themeValueLight));
-            if(mode.equals(getString(R.string.themeValueDark)))
-            {
-                currentAppTheme = getString(R.string.themeValueDark);
-            }
-            else if(mode.equals(getString(R.string.themeValueLight)))
-            {
-                currentAppTheme = getString(R.string.themeValueLight);
-            }
-            else if(mode.equals(getString(R.string.themeValueCustom)))
-            {
-                currentAppTheme = getString(R.string.themeValueCustom);
-            }
-            setTheme(loadTheme());
-            setBackground();
-
-            //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
-            recreate();
-        }
-    }
     /*
-    * Button Callback fot btnHttpParser
-    * */
+     * Button Callback fot btnHttpParser
+     * */
     public void onClickHttpParser(View v){
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         // Inflate the custom layout/view
