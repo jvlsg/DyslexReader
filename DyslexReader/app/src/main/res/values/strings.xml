@@ -3,7 +3,7 @@
 
     <!-- MAIN ACTIVITY  -->
     <string name="btnReaderLabel">Read</string>
-    <string name="btnFileLabel">Web</string>
+    <string name="btnWebLabel">Web</string>
     <string name="btnCameraLabel">Camera</string>
     <string name="btnPasteLabel">Paste</string>
     <string name="btnSettingsLabel">Settings</string>
@@ -11,8 +11,8 @@
     <string name="tvPreviewHint">This window will show the text that will be modified.</string>
 
     <!-- READER ACTIVITY  -->
-    <string name="btnNextWordLabel">Prox. Palavra</string>
-    <string name="btnPreviousWordLabel">Palavra Ant.</string>
+    <string name="btnNextWordLabel">Next Word</string>
+    <string name="btnPreviousWordLabel">Prev. Word</string>
     <string name="btnAnalyzeWordLabel">Analyze</string>
 
     <!-- ANALYSIS ACTIVITY  -->
@@ -23,6 +23,11 @@
     <string name="errDefinitionNotAvailable">Definition not Available</string>
     <string name="errAudioNotAvailable">Audio not Available</string>
 
+
+    <!-- HTTP POPUP-->
+    <string name="btnGetTextLabel">Get From site</string>
+    <string name="tvLinkHint">URL from site</string>
+    <string name="btnClosePopUP">Close</string>
 
     <!-- SETTINGS ACTIVITY -->
     <string name="settingsLabel">Settings</string>

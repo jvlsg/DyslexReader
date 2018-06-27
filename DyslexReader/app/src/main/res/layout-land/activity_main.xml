@@ -35,15 +35,15 @@
         app:layout_constraintTop_toBottomOf="@+id/tvPreview" />
 
     <Button
-        android:id="@+id/btnFile"
+        android:id="@+id/btnHttpParser"
         android:layout_width="75dp"
         android:layout_height="85dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:drawableTop="@mipmap/web_icon"
-        android:onClick="onClickFile"
-        android:text="@string/file"
+        android:onClick="onClickHttpParser"
+        android:text="@string/btnWebLabel"
         android:textSize="12dp"
         app:layout_constraintStart_toEndOf="@+id/btnPaste"
         app:layout_constraintTop_toBottomOf="@+id/tvPreview" />
@@ -71,17 +71,9 @@
         android:layout_marginTop="8dp"
         android:drawableTop="@mipmap/camera_icon"
         android:text="@string/btnCameraLabel"
+        android:onClick="onClickCamera"
         android:textSize="12dp"
-        app:layout_constraintStart_toEndOf="@+id/btnFile"
+        app:layout_constraintStart_toEndOf="@+id/btnHttpParser"
         app:layout_constraintTop_toBottomOf="@+id/tvPreview" />
 
-    <!--<Button-->
-        <!--android:id="@+id/btnSettings"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="75dp"-->
-        <!--android:layout_marginTop="28dp"-->
-        <!--android:onClick="onClickSettings"-->
-        <!--android:text="@string/btnSettingsLabel"-->
-        <!--app:layout_constraintStart_toStartOf="@+id/tvPreview"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/tvPreview" />-->
 </android.support.constraint.ConstraintLayout>

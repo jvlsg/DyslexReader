@@ -46,7 +46,7 @@
         android:layout_marginTop="8dp"
         android:drawableTop="@mipmap/web_icon"
         android:onClick="onClickHttpParser"
-        android:text="@string/file"
+        android:text="@string/btnWebLabel"
         android:textSize="12dp"
         app:layout_constraintStart_toEndOf="@+id/btnCamera"
         app:layout_constraintTop_toBottomOf="@+id/tvPreview" />

@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
          */
         tvPreview = (TextView)findViewById(R.id.tvPreview);
         btnReader = (Button)findViewById(R.id.btnReader);
-        btnFile = (Button)findViewById(R.id.btnFile);
+        btnFile = (Button)findViewById(R.id.btnHttpParser);
         btnPaste = (Button)findViewById(R.id.btnPaste);
         btnCamera = (Button)findViewById(R.id.btnCamera);
         constraintLayout = (ConstraintLayout)findViewById(R.id.mainConstraintLayout);
@@ -263,15 +263,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
 
-    /*
-     * Button Callback fot btnHttpParser
-     * */
-    /*
-     * Button Callback fot btnHttpParser
-     * */
+    /***
+    *Callback do HTTP parser
+    */
     public void onClickHttpParser(View v) {
+
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         // Inflate the custom layout/view
+
         View customView = inflater.inflate(R.layout.popup_http_parser, null);
         ConstraintLayout mConstraintLayout = (ConstraintLayout) findViewById(R.id.mainConstraintLayout);
         mPopupWindow = new PopupWindow(
@@ -279,15 +278,25 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT
         );
+
         // Set an elevation value for popup window
         // Call requires API level 21
         if (Build.VERSION.SDK_INT >= 21) {
             mPopupWindow.setElevation(5.0f);
         }
 
+        Button btnClose = (Button) customView.findViewById(R.id.btnClosePopUp);
         Button popUpPaste = (Button) customView.findViewById(R.id.btnPastePopUpHttp);
         Button getUrl = (Button) customView.findViewById(R.id.btnGetText);
         final EditText textUrl = (EditText) customView.findViewById(R.id.editLink);
+
+
+        btnClose.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                mPopupWindow.dismiss();
+            }
+        });
 
         popUpPaste.setOnClickListener(new View.OnClickListener() {
             @Override

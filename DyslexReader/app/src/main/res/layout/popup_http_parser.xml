@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_custom_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="2dp"
-    android:background="#C0C0C0"
-    >
+    android:theme="@style/AppTheme.Light"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="2dp">
 
 
     <EditText
         android:id="@+id/editLink"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:ems="15"
-        android:hint="URL from site"
+        android:hint="@string/tvLinkHint"
         android:inputType="textPersonName"
         android:text="" />
 
-    <Button
-        android:id="@+id/btnPastePopUpHttp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@id/editLink"
-        android:text="Paste" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnGetText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/editLink"
-        android:layout_centerVertical="true"
-        android:text="Get Text" />
+        <Button
+            android:id="@+id/btnClosePopUp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/close_icon"
+            android:text="@string/btnClosePopUP" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/btnPastePopUpHttp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/content_paste"
+            android:text="@string/btnPasteLabel" />
+
+        <Button
+            android:id="@+id/btnGetText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/read_icon"
+            android:text="@string/btnGetTextLabel" />
+    </LinearLayout>
+
+</LinearLayout>
