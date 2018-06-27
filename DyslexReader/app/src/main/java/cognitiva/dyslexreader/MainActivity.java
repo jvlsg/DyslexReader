@@ -63,15 +63,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     String currentAppTheme;
 
-    /***
-     * TODO: Declaration of Parser Classes
-     *
-     * ImageParser imageParser
-     * HTTPParser httpParser
-     * EPUBParser epubParser
-     * PDFParser pdfParser
-     */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +98,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         t.show();
     }
 
+    /**
+     * Método usado para colorir o fundo de Textviews da Activity
+     */
     public void setTextViewBackground()
     {
         if(currentAppTheme.equals(getString(R.string.themeValueLight)))
@@ -120,7 +114,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
 
-
+    /***
+     * Método usado para carregar os temas do aplicativo.
+     * Sendo eles os defaults e o customizado
+     */
     public void loadTheme()
     {
         SharedPreferences preferences = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
@@ -131,12 +128,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if(currentAppTheme.equals(getString(R.string.themeValueLight)))
         {
             setTheme(R.style.AppTheme_Light);
-            //setTextViewBackground();
         }
         else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
         {
             setTheme(R.style.AppTheme_Dark);
-            //setTextViewBackground();
         }
         else
         {
@@ -338,10 +333,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     tvPreview.setText(text);
                     mPopupWindow.dismiss();
                 } catch (MalformedURLException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (BoilerpipeProcessingException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }

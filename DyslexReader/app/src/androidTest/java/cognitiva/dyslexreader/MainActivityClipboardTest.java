@@ -20,6 +20,8 @@ import static org.hamcrest.Matchers.not;
 @RunWith(JUnit4.class)
 /***
  * Testa se é possível colar algo diferente de nulo e acessar a Reader Activity
+ *
+ * OBS: É necessário que tenha algo na Clipboard do celular antes de rodar esse teste
  */
 public class MainActivityClipboardTest {
 

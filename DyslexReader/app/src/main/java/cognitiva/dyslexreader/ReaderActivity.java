@@ -113,6 +113,7 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
 
 
         tvMainText = (TextView) findViewById(R.id.tvMainText);
+        //Aplica o tema atual à activity
         themeStyle();
         tvMainText.setMovementMethod(new ScrollingMovementMethod());
 
@@ -134,7 +135,6 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
 
         mp = MediaPlayer.create(this, R.raw.whitenoise);
         mp.setLooping(true);
-
         playWhiteNoise();
 
 
@@ -188,8 +188,9 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
 
     }
 
-
-    //FUnção que coloca o tema na interface
+    /**
+     *Função que coloca o tema na interface da Activity
+     */
     public void themeStyle()
     {
         SharedPreferences preferences = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
@@ -206,7 +207,6 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         }
         else
         {
-            //TODO: colocar o tema custom aqui
             MainActivity.setCustomTheme(preferences, this,
                     getSupportActionBar(),
                     new View[]{constraintLayout},
@@ -322,13 +322,13 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
             currentHighlightColor = preferences.getInt(this.getString(R.string.themeCustomHighlightKey), R.color.colorTextPrimary_light);
             currentPrefixColor = preferences.getInt(this.getString(R.string.themeCustomPrefixKey), R.color.colorTextPrimary_light);
             currentSuffixColor = preferences.getInt(this.getString(R.string.themeCustomSuffixKey), R.color.colorTextPrimary_light);
-            //tvMainText.setBackgroundColor(preferences.getInt(this.getString(R.string.themeCustomBackgroundKey), R.color.colorTextPrimary_light));
-            //TODO: Colocar as coisas do tema custom
         }
 
     }
 
-
+    /***
+     * Usada para tocar o Ruído branco quando a coniguração está habilitada
+     */
     public void playWhiteNoise()
     {
         System.out.println("playWhiteNoise");
