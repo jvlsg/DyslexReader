@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/mainConstraintLayout"
@@ -39,14 +38,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tvPreview" />
 
     <Button
-        android:id="@+id/btnFile"
+        android:id="@+id/btnHttpParser"
         android:layout_width="75dp"
         android:layout_height="85dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:drawableTop="@mipmap/web_icon"
-        android:onClick="onClickFile"
+        android:onClick="onClickHttpParser"
         android:text="@string/file"
         android:textSize="12dp"
         app:layout_constraintStart_toEndOf="@+id/btnCamera"
@@ -79,33 +78,6 @@
         app:layout_constraintStart_toEndOf="@+id/btnPaste"
         app:layout_constraintTop_toBottomOf="@+id/tvPreview" />
 
-    <!--<Button-->
-        <!--android:id="@+id/btnSettings"-->
-        <!--android:layout_width="64dp"-->
-        <!--android:layout_height="64dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginRight="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:text="@string/btnSettingsLabel"-->
-        <!--android:onClick="onClickSettings"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
-        android:layout_marginTop="8dp"
-        android:text="@string/btnSettingsLabel"
-        android:onClick="onClickSettings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnHttpParser"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Link"
-        android:onClick="onClickHttpParser"
-        tools:layout_editor_absoluteX="198dp"
-        tools:layout_editor_absoluteY="418dp" />
 
 </android.support.constraint.ConstraintLayout>

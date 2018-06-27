@@ -6,13 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
+import android.os.StrictMode;
 import android.os.Debug;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.ViewGroup.LayoutParams;
 
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.text.TextRecognizer;
 
@@ -36,7 +40,7 @@ import java.net.URL;
 import de.l3s.boilerpipe.BoilerpipeProcessingException;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     //Button to ReaderActivity
     Button btnReader;
@@ -84,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
         tvPreview.setMovementMethod(new ScrollingMovementMethod());
 
+        //utilizado no httpParser
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
 
@@ -255,24 +262,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /***
-     * Button Callback for btnSettings
-     */
-    public void onClickSettings(View v){
-        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-        startActivity(intent);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-    }
     /*
      * Button Callback fot btnHttpParser
      * */
-    public void onClickHttpParser(View v){
+    /*
+     * Button Callback fot btnHttpParser
+     * */
+    public void onClickHttpParser(View v) {
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         // Inflate the custom layout/view
-        View customView = inflater.inflate(R.layout.popup_http_parser,null);
-        ConstraintLayout mConstraintLayout = (ConstraintLayout) findViewById(R.id.main_layout);
+        View customView = inflater.inflate(R.layout.popup_http_parser, null);
+        ConstraintLayout mConstraintLayout = (ConstraintLayout) findViewById(R.id.mainConstraintLayout);
         mPopupWindow = new PopupWindow(
                 customView,
                 LayoutParams.WRAP_CONTENT,
@@ -280,20 +281,26 @@ public class MainActivity extends AppCompatActivity {
         );
         // Set an elevation value for popup window
         // Call requires API level 21
-        if(Build.VERSION.SDK_INT>=21){
+        if (Build.VERSION.SDK_INT >= 21) {
             mPopupWindow.setElevation(5.0f);
         }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Button popUpPaste = (Button) customView.findViewById(R.id.btnPastePopUpHttp);
+        Button getUrl = (Button) customView.findViewById(R.id.btnGetText);
+        final EditText textUrl = (EditText) customView.findViewById(R.id.editLink);
 
-        if(key.equals(getString(R.string.themeKey)))
-        {
-            String mode = sharedPreferences.getString(key, "light");
-
-            if(mode.equals(getString(R.string.themeValueDark)))
-            {
-                currentAppTheme = getString(R.string.themeValueDark);
+        popUpPaste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                if (clipboardManager.hasPrimaryClip()) {
+                    ClipData.Item item = clipboardManager.getPrimaryClip().getItemAt(0);
+                    if (item.getText() != null) {
+                        textUrl.setText(item.getText());
+                    } else {
+                        return;
+                    }
+                }
             }
         });
 
@@ -313,6 +320,23 @@ public class MainActivity extends AppCompatActivity {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+            }
+        });
+        mPopupWindow.showAtLocation(mConstraintLayout, Gravity.CENTER,0,0);
+
+
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        if(key.equals(getString(R.string.themeKey)))
+        {
+            String mode = sharedPreferences.getString(key, "light");
+
+            if(mode.equals(getString(R.string.themeValueDark)))
+            {
+                currentAppTheme = getString(R.string.themeValueDark);
             }
             else if(mode.equals(getString(R.string.themeValueCustom)))
             {
