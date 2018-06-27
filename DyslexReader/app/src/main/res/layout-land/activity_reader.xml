@@ -9,7 +9,8 @@
     <TextView
         android:id="@+id/tvMainText"
         android:layout_width="0dp"
-        android:layout_height="172dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -18,6 +19,7 @@
         android:background="@android:drawable/editbox_background"
         android:minHeight="193dp"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnAnalyzeWord"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +32,7 @@
         android:layout_marginBottom="8dp"
         android:drawableTop="@mipmap/next_icon"
         android:text="@string/btnNextWordLabel"
-        android:textSize="12dp"
+        android:textSize="9dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tvMainText" />
 
@@ -41,7 +43,7 @@
         android:layout_marginBottom="8dp"
         android:drawableTop="@mipmap/previous_icon"
         android:text="@string/btnPreviousWordLabel"
-        android:textSize="12dp"
+        android:textSize="9dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvMainText" />
 
@@ -69,7 +71,7 @@
         android:drawableTop="@mipmap/help_icon"
         android:onClick="onClickAnalyze"
         android:text="@string/btnAnalyzeWordLabel"
-        android:textSize="12dp"
+        android:textSize="9dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -85,6 +87,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@android:drawable/editbox_background"
+        app:layout_constraintBottom_toTopOf="@+id/btnAnalyzeWord"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMainText" />
