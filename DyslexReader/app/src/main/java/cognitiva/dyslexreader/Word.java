@@ -16,6 +16,17 @@ public class Word {
         this.definitions = definitions;
     }
 
+    public static String removePunctuation(String w) {
+        StringBuilder builder = new StringBuilder();
+
+        for (char c : w.toLowerCase().toCharArray()) {
+            if (Character.isLetter(c))
+                builder.append(c);
+        }
+
+        return builder.toString();
+    }
+
     public String getWord() {
         return word;
     }

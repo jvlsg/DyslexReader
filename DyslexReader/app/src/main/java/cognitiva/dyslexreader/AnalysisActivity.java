@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.content.SharedPreferences;
 import android.text.method.ScrollingMovementMethod;
@@ -39,7 +40,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
 public class AnalysisActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+
 
     String currentAppTheme;
 
@@ -47,6 +50,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
     TextView tvMeaning;
     TextView tvPhonetics;
     Button btnPronunciation;
+    ProgressBar pbLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +58,13 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         setTheme(loadTheme());
         setContentView(R.layout.activity_analysis);
 
-        tvWord = (TextView) findViewById(R.id.tvSyllable);
+        tvWord = findViewById(R.id.tvSyllable);
         tvWord.setMovementMethod(new ScrollingMovementMethod());
-        tvMeaning = (TextView) findViewById(R.id.tvDefinition);
+        tvMeaning = findViewById(R.id.tvDefinition);
         tvMeaning.setMovementMethod(new ScrollingMovementMethod());
+        tvPhonetics = findViewById(R.id.tvPhonetics);
         btnPronunciation = findViewById(R.id.btnPronunciation);
+        pbLoading = findViewById(R.id.pbLoadingAnalysis);
 
         setBackground();
 
@@ -67,9 +73,11 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
 
         requestPermission();
 
+        if (wordToAnalyze != null)
+            wordToAnalyze = Word.removePunctuation(wordToAnalyze);
 
-        AsyncTask fetch = new FetchWord().execute(wordToAnalyze);
-
+        FetchWord fetch = new FetchWord();
+        fetch.execute(wordToAnalyze);
 
         /**
          * Botão para retorno à Reader ACtivity
@@ -173,6 +181,19 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
     public class FetchWord extends AsyncTask<String, Void, Word> {
 
         private static final String API_KEY = "33f1899bae9a7328fd0020ed3710587667a3c3fa92cade914";
+        private String w;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //set visibilities for loading
+            tvWord.setVisibility(View.INVISIBLE);
+            tvPhonetics.setVisibility(View.INVISIBLE);
+            tvMeaning.setVisibility(View.INVISIBLE);
+            btnPronunciation.setVisibility(View.INVISIBLE);
+            pbLoading.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected Word doInBackground(String... strings) {
@@ -181,6 +202,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             Pair<String[], Integer> hyphenation = getHyphenation(strings[0]);
             String url = getAudioURL(strings[0]);
             Word word = null;
+            w = strings[0];
 
             if ((url != null)
                     && (downloadAudioFile(strings[0], url))
@@ -197,6 +219,16 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             super.onPostExecute(word);
             if (word == null) {
                 Log.d("Word", "word null");
+
+                //tenta ver se palavra nao foi encontrada pq eh plural
+                //se for remove o s do final e tenta novamente
+                if (w.charAt(w.length() - 1) == 's')
+                    new FetchWord().execute(w.substring(0, w.length()-1));
+                else {
+                    tvWord.setText("Word not found!");
+                    tvWord.setVisibility(View.VISIBLE);
+                    pbLoading.setVisibility(View.INVISIBLE);
+                }
                 return;
             }
 
@@ -233,6 +265,13 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
                     mp.start();
                 }
             });
+
+            //set visibilities after loading
+            tvWord.setVisibility(View.VISIBLE);
+            //tvPhonetics.setVisibility(View.VISIBLE);
+            tvMeaning.setVisibility(View.VISIBLE);
+            btnPronunciation.setVisibility(View.VISIBLE);
+            pbLoading.setVisibility(View.INVISIBLE);
         }
 
         private ArrayList<Pair <String, String>> getDefinitions(String word) {
