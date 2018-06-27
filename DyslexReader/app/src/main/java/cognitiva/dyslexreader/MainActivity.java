@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.StrictMode;
@@ -37,6 +38,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.net.MalformedURLException;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     Button btnSettings;
     Button btnHttpParser;
 
+
     TextView tvPreview;
     private PopupWindow mPopupWindow;
     private static final int CAMERA_ACTIVITY_CODE = 311;
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     ConstraintLayout constraintLayout;
 
     String currentAppTheme;
+    static Typeface typeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         btnCamera = (Button)findViewById(R.id.btnCamera);
         constraintLayout = (ConstraintLayout)findViewById(R.id.mainConstraintLayout);
 
+
+
+
         loadTheme();
         setTextViewBackground();
 
@@ -87,6 +94,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         //utilizado no httpParser
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/OpenDyslexic3-Regular.ttf");
+
+        MainActivity.setFont(tvPreview);
+        MainActivity.setFont(btnReader);
+        MainActivity.setFont(btnFile);
+        MainActivity.setFont(btnPaste);
+        MainActivity.setFont(btnCamera);
+
     }
 
 
@@ -301,6 +316,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         final EditText textUrl = (EditText) customView.findViewById(R.id.editLink);
 
 
+
+
         btnClose.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -340,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         });
         mPopupWindow.showAtLocation(mConstraintLayout, Gravity.CENTER,0,0);
+
 
 
     }
@@ -404,5 +422,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public static void setFont(TextView x)
+    {
+        x.setTypeface(typeface);
+    }
+    public static void setFont(Button x)
+    {
+        x.setTypeface(typeface);
     }
 }

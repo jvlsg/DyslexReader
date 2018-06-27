@@ -3,6 +3,7 @@ package cognitiva.dyslexreader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -109,6 +110,8 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         btnAnalyzeWord = (Button) findViewById(R.id.btnAnalyzeWord);
         pbReadingProgress = (ProgressBar) findViewById(R.id.pbReadingProgress);
 
+
+
         constraintLayout = (ConstraintLayout) findViewById(R.id.readerConstraintLayout);
 
 
@@ -119,6 +122,11 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
 
         //Pega o texto da MainActivity
         text = getIntent().getStringExtra("text");
+
+        MainActivity.setFont(btnNextWord);
+        MainActivity.setFont(btnPreviousWord);
+        MainActivity.setFont(btnAnalyzeWord);
+        MainActivity.setFont(tvMainText);
 
         StringTokenizer st = new StringTokenizer(text);
         while(st.hasMoreTokens())
@@ -169,8 +177,6 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
                 return false;
             }
         });
-
-
     }
 
     @Override
