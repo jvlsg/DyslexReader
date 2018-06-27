@@ -124,10 +124,10 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             case REQUEST_CODE_ASK_PERMISSIONS:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
-                    Toast.makeText(AnalysisActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AnalysisActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
                 } else {
                     // Permission Denied
-                    Toast.makeText(AnalysisActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AnalysisActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:

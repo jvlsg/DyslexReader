@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
         else
         {
-            Toast.makeText(this, R.string.toastSendError, Toast.LENGTH_SHORT).show();
+            createToast(getString(R.string.toastSendError));
         }
 
     }
