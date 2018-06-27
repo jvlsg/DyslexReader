@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/tvMainText"
         android:layout_width="0dp"
-        android:layout_height="193dp"
+        android:layout_height="172dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -26,46 +26,53 @@
     <Button
         android:id="@+id/btnNextWord"
         android:layout_width="85dp"
-        android:layout_height="75dp"
+        android:layout_height="95dp"
         android:layout_marginBottom="8dp"
-        android:onClick="onClickNextWord"
+        android:drawableTop="@mipmap/next_icon"
         android:text="@string/btnNextWordLabel"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tvMainText" />
 
     <Button
         android:id="@+id/btnPreviousWord"
         android:layout_width="85dp"
-        android:layout_height="75dp"
+        android:layout_height="95dp"
         android:layout_marginBottom="8dp"
-        android:onClick="onClickPeviousWord"
+        android:drawableTop="@mipmap/previous_icon"
         android:text="@string/btnPreviousWordLabel"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvMainText" />
 
-    <Button
-        android:id="@+id/btnSettings"
-        android:layout_width="85dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:onClick="onClickSettings"
-        android:text="@string/btnSettingsLabel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnPreviousWord" />
+    <!--<Button-->
+        <!--android:id="@+id/btnSettings"-->
+        <!--android:layout_width="85dp"-->
+        <!--android:layout_height="75dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:onClick="onClickSettings"-->
+        <!--android:text="@string/btnSettingsLabel"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/btnPreviousWord" />-->
 
     <Button
         android:id="@+id/btnAnalyzeWord"
         android:layout_width="85dp"
-        android:layout_height="75dp"
+        android:layout_height="95dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:drawableTop="@mipmap/help_icon"
         android:onClick="onClickAnalyze"
         android:text="@string/btnAnalyzeWordLabel"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnNextWord" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/pbReadingProgress"

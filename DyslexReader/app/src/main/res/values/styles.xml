@@ -32,5 +32,19 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
+    <style name="AppTheme.Custom" parent="Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary_dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_dark</item>
+        <item name="colorAccent">@color/colorAccent_dark</item>
+        <item name="android:background">@color/colorBackground_dark</item>
+
+        <item name="android:textColorPrimary">@color/colorTextPrimary_dark</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary_dark</item>
+
+        <item name="TextViewBackAttributeColor">@color/colorTextView_dark</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    </style>
 
 </resources>

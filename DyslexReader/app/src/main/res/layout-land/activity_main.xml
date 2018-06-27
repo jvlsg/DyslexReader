@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainConstraintLayout"
     tools:context=".MainActivity">
 
     <TextView
@@ -26,7 +27,8 @@
         android:id="@+id/btnReader"
         android:layout_width="wrap_content"
         android:layout_height="83dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
+        android:drawableRight="@mipmap/read_icon"
         android:onClick="onClickReader"
         android:text="@string/btnReaderLabel"
         app:layout_constraintEnd_toEndOf="@+id/tvPreview"
@@ -35,45 +37,51 @@
     <Button
         android:id="@+id/btnFile"
         android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="85dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableTop="@mipmap/web_icon"
         android:onClick="onClickFile"
         android:text="@string/file"
-        app:layout_constraintEnd_toStartOf="@+id/btnCamera"
+        android:textSize="12dp"
+        app:layout_constraintStart_toEndOf="@+id/btnPaste"
         app:layout_constraintTop_toBottomOf="@+id/tvPreview" />
 
     <Button
         android:id="@+id/btnPaste"
         android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="85dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:drawableTop="@mipmap/content_paste"
         android:onClick="onClickPaste"
         android:text="@string/btnPasteLabel"
-        app:layout_constraintEnd_toStartOf="@+id/btnFile"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPreview" />
 
     <Button
         android:id="@+id/btnCamera"
         android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="85dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableTop="@mipmap/camera_icon"
         android:text="@string/btnCameraLabel"
-        app:layout_constraintEnd_toStartOf="@+id/btnReader"
+        android:textSize="12dp"
+        app:layout_constraintStart_toEndOf="@+id/btnFile"
         app:layout_constraintTop_toBottomOf="@+id/tvPreview" />
 
-    <Button
-        android:id="@+id/btnSettings"
-        android:layout_width="0dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="28dp"
-        android:onClick="onClickSettings"
-        android:text="@string/btnSettingsLabel"
-        app:layout_constraintStart_toStartOf="@+id/tvPreview"
-        app:layout_constraintTop_toBottomOf="@+id/tvPreview" />
+    <!--<Button-->
+        <!--android:id="@+id/btnSettings"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="75dp"-->
+        <!--android:layout_marginTop="28dp"-->
+        <!--android:onClick="onClickSettings"-->
+        <!--android:text="@string/btnSettingsLabel"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/tvPreview"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/tvPreview" />-->
 </android.support.constraint.ConstraintLayout>

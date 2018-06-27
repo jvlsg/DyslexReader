@@ -53,7 +53,7 @@ public class Word {
         this.definitions = definitions;
     }
 
-    public boolean haveAudio() {
+    public boolean hasAudio() {
         return audio;
     }
 

@@ -2,13 +2,19 @@ package cognitiva.dyslexreader;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Debug;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     TextView tvPreview;
 
+    ConstraintLayout constraintLayout;
+
     String currentAppTheme;
 
 
@@ -43,17 +51,24 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(loadTheme());
+        loadTheme();
         setContentView(R.layout.activity_main);
-
 
         /**
          * O textView será muito usado, então já coloca ele aqui
          */
         tvPreview = (TextView)findViewById(R.id.tvPreview);
+        btnReader = (Button)findViewById(R.id.btnReader);
+        btnFile = (Button)findViewById(R.id.btnFile);
+        btnPaste = (Button)findViewById(R.id.btnPaste);
+        btnCamera = (Button)findViewById(R.id.btnCamera);
+        constraintLayout = (ConstraintLayout)findViewById(R.id.mainConstraintLayout);
+
+        loadTheme();
+        setTextViewBackground();
+
         tvPreview.setMovementMethod(new ScrollingMovementMethod());
 
-        setBackground();
     }
 
     @Override
@@ -70,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         t.show();
     }
 
-    public void setBackground()
+    public void setTextViewBackground()
     {
         if(currentAppTheme.equals(getString(R.string.themeValueLight)))
         {
@@ -81,35 +96,75 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         {
             tvPreview.setBackgroundColor(getResources().getColor(R.color.colorTextView_dark));
         }
-        else if (currentAppTheme.equals(getString(R.string.themeValueCustom)))
-        {
-            //TODO: Colocar o background custom aqui
-        }
     }
 
-    public int loadTheme()
+
+    public void loadTheme()
     {
         SharedPreferences preferences = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
         currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
         preferences.registerOnSharedPreferenceChangeListener(this);
-        String currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
+        //String currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
+
         if(currentAppTheme.equals(getString(R.string.themeValueLight)))
         {
-            return R.style.AppTheme_Light;
+            setTheme(R.style.AppTheme_Light);
+            //setTextViewBackground();
         }
         else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
         {
-            return R.style.AppTheme_Dark;
+            setTheme(R.style.AppTheme_Dark);
+            //setTextViewBackground();
         }
         else
         {
-            //TODO: Colocar o tema custom
-            return R.style.AppTheme_Dark;
+            setCustomTheme(preferences, this,
+                    new View[]{constraintLayout},
+                    new Button[] {btnReader, btnFile, btnPaste, btnCamera, btnSettings},
+                    new TextView[] {tvPreview});
         }
-
     }
 
+    /**
+     * Usado para carregar o Tema custom pegando as cores das Preferences.
+     * O método deve ser chamado por cada atividade conforme é necessário aplicar o tema customizado.
+     * Argumentos podem ser nulos caso não haja um conjunto especifico para modificar
+     * @param preferences referencia ao SharedPreferences para carregar as cores
+     * @param context Contexto
+     * @param views Vetor com todas as views que tem de ser customizadas
+     * @param buttons Vetor com todos os botões que tem de ser customizados
+     * @param textViews Vetor com todos as TextViews que tem de ser customizados
+     */
+    public static void setCustomTheme(SharedPreferences preferences, Context context, View views[], Button buttons[], TextView textViews[]){
 
+        int customPrimaryText = preferences.getInt(context.getString(R.string.themeCustomPrimaryTextKey), R.color.colorTextPrimary_light);
+        int customSecondaryText = preferences.getInt(context.getString(R.string.themeCustomSecondaryTextKey), R.color.colorTextPrimary_light);
+        int customBackground = preferences.getInt(context.getString(R.string.themeCustomBackgroundKey), R.color.colorBackground_light);
+        int customTextViewBackground = preferences.getInt(context.getString(R.string.themeCustomTextviewBackgroundKey), R.color.colorBackground_light);
+
+        if(views != null) {
+            for (int i = 0; i < views.length; i++) {
+                if(views[i]!=null)
+                    views[i].setBackgroundColor(customBackground);
+            }
+        }
+        if (buttons != null) {
+            for (int i = 0; i < buttons.length; i++) {
+                if(buttons[i]!=null) {
+                    buttons[i].setTextColor(customPrimaryText);
+                    buttons[i].setBackgroundColor(customTextViewBackground);
+                }
+            }
+        }
+        if(textViews != null) {
+            for (int i = 0; i < textViews.length; i++) {
+                if(textViews[i]!=null) {
+                    textViews[i].setTextColor(customSecondaryText);
+                    textViews[i].setBackgroundColor(customTextViewBackground);
+                }
+            }
+        }
+    }
 
     /***
      * Button Callback for btnReader
@@ -183,9 +238,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
         if(key.equals(getString(R.string.themeKey)))
         {
-            String mode = sharedPreferences.getString(key, getString(R.string.themeValueLight));
+            String mode = sharedPreferences.getString(key, "light");
+
             if(mode.equals(getString(R.string.themeValueDark)))
             {
                 currentAppTheme = getString(R.string.themeValueDark);
@@ -198,11 +255,50 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             {
                 currentAppTheme = getString(R.string.themeValueCustom);
             }
-            setTheme(loadTheme());
-            setBackground();
+            loadTheme();
+            setTextViewBackground();
 
             //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
             recreate();
+        }
+
+
+        if(key.equals(getString(R.string.themeCustomPrimaryTextKey)) ||
+            key.equals(getString(R.string.themeCustomSecondaryTextKey)) ||
+            key.equals(getString(R.string.themeCustomBackgroundKey)) ||
+            key.equals(getString(R.string.themeCustomTextviewBackgroundKey)) ||
+            key.equals(getString(R.string.themeCustomHighlightKey)) ||
+            key.equals(getString(R.string.themeCustomPrefixKey)) ||
+            key.equals(getString(R.string.themeCustomSuffixKey))
+            ){
+            System.out.println("CHAMOU");
+
+            loadTheme();
+            setTextViewBackground();
+            recreate();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.action_setting:
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

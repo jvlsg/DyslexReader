@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
@@ -11,6 +12,9 @@ import android.text.Spannable;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +36,8 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
     Button btnAnalyzeWord;
     ProgressBar pbReadingProgress;
     TextView tvMainText;
+
+    ConstraintLayout constraintLayout;
 
     //O texto que foi mandado da MainActivity
     String text;
@@ -95,11 +101,19 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadUserPreferences();
-        setTheme(themeStyle());
+        themeStyle();
         setContentView(R.layout.activity_reader);
+
+        btnNextWord = (Button) findViewById(R.id.btnNextWord);
+        btnPreviousWord = (Button) findViewById(R.id.btnPreviousWord);
+        btnAnalyzeWord = (Button) findViewById(R.id.btnAnalyzeWord);
+        pbReadingProgress = (ProgressBar) findViewById(R.id.pbReadingProgress);
+
+        constraintLayout = (ConstraintLayout) findViewById(R.id.readerConstraintLayout);
 
 
         tvMainText = (TextView) findViewById(R.id.tvMainText);
+        themeStyle();
         tvMainText.setMovementMethod(new ScrollingMovementMethod());
 
         //Pega o texto da MainActivity
@@ -123,8 +137,6 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
 
         playWhiteNoise();
 
-        btnNextWord = (Button) findViewById(R.id.btnNextWord);
-        btnPreviousWord = (Button) findViewById(R.id.btnPreviousWord);
 
         //Seta Touch listeners, para que os botões de next e previous funcionem tanto pra hold quanto pra normal
         btnNextWord.setOnTouchListener(new View.OnTouchListener() {
@@ -168,20 +180,27 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
     }
 
     //FUnção que coloca o tema na interface
-    public int themeStyle()
+    public void themeStyle()
     {
+        SharedPreferences preferences = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
+        preferences.registerOnSharedPreferenceChangeListener(this);
+
         if(currentAppTheme.equals(getString(R.string.themeValueLight)))
         {
-            return R.style.AppTheme_Light;
+            setTheme(R.style.AppTheme_Light);
         }
         else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
         {
-            return R.style.AppTheme_Dark;
+            setTheme(R.style.AppTheme_Dark);
         }
         else
         {
             //TODO: colocar o tema custom aqui
-            return R.style.AppTheme_Dark;
+            MainActivity.setCustomTheme(preferences, this,
+                    new View[]{constraintLayout},
+                    new Button[] {btnPreviousWord, btnNextWord, btnAnalyzeWord, btnSettings},
+                    new TextView[] {tvMainText});
         }
     }
 
@@ -274,6 +293,7 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
      */
     void updateCurrentColors()
     {
+        SharedPreferences preferences = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
         if(currentAppTheme.equals(getString(R.string.themeValueLight))){
             currentHighlightColor = getResources().getColor(R.color.colorTextHighlight_light);
             currentPrefixColor = getResources().getColor(R.color.colorTextPrefix_light);
@@ -288,6 +308,10 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         }
         if(currentAppTheme.equals(getString(R.string.themeValueCustom)))
         {
+            currentHighlightColor = preferences.getInt(this.getString(R.string.themeCustomHighlightKey), R.color.colorTextPrimary_light);
+            currentPrefixColor = preferences.getInt(this.getString(R.string.themeCustomPrefixKey), R.color.colorTextPrimary_light);
+            currentSuffixColor = preferences.getInt(this.getString(R.string.themeCustomSuffixKey), R.color.colorTextPrimary_light);
+            //tvMainText.setBackgroundColor(preferences.getInt(this.getString(R.string.themeCustomBackgroundKey), R.color.colorTextPrimary_light));
             //TODO: Colocar as coisas do tema custom
         }
 
@@ -526,12 +550,35 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
                 currentAppTheme = getString(R.string.themeValueCustom);
             }
 
-            setTheme(themeStyle());
+            themeStyle();
+            updateCurrentColors();
             //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
             recreate();
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.action_setting:
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 }

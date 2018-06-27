@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -15,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -54,11 +58,16 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
     ProgressBar pbLoading;
     ImageView imgWordnik;
 
+    //Usada para Toast de erro caso nao haja audio para tocar
+    String audioErrMsg;
+    ConstraintLayout constraintLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(loadTheme());
+        loadTheme();
         setContentView(R.layout.activity_analysis);
+
 
         tvWord = findViewById(R.id.tvSyllable);
         tvWord.setMovementMethod(new ScrollingMovementMethod());
@@ -68,6 +77,11 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         btnPronunciation = findViewById(R.id.btnPronunciation);
         pbLoading = findViewById(R.id.pbLoadingAnalysis);
         imgWordnik = findViewById(R.id.imgWordnik);
+
+        audioErrMsg = getResources().getString(R.string.errAudioNotAvailable);
+        constraintLayout = (ConstraintLayout) findViewById(R.id.analyzeConstraintLayout);
+
+        loadTheme();
 
         setBackground();
 
@@ -126,13 +140,9 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         {
             tvWord.setBackgroundColor(getResources().getColor(R.color.colorTextView_dark));
         }
-        else
-        {
-            //TODO: colocar o bacckground custom aqui
-        }
     }
 
-    public int loadTheme()
+    public void loadTheme()
     {
         SharedPreferences preferences = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
         currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
@@ -140,16 +150,20 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         String currentAppTheme = preferences.getString(getString(R.string.themeKey), getString(R.string.themeValueLight));
         if(currentAppTheme.equals(getString(R.string.themeValueLight)))
         {
-            return R.style.AppTheme_Light;
+            setTheme(R.style.AppTheme_Light);
         }
         else if(currentAppTheme.equals(getString(R.string.themeValueDark)))
         {
-            return R.style.AppTheme_Dark;
+            setTheme(R.style.AppTheme_Dark);
         }
         else
         {
+            MainActivity.setCustomTheme(preferences, this,
+                    new View[]{constraintLayout},
+                    new Button[] {btnPronunciation},
+                    new TextView[] {tvWord, tvMeaning, tvPhonetics});
             //TODO: Colocar o tema custom aqui
-            return R.style.AppTheme_Dark;
+            //return R.style.AppTheme_Dark;
         }
 
 
@@ -172,7 +186,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             {
                 currentAppTheme = getString(R.string.themeValueCustom);
             }
-            setTheme(loadTheme());
+            loadTheme();
             setBackground();
 
             //Isso faz com que recarregue a interface corretamente, mas reseta a posição da palavra
@@ -181,10 +195,34 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.action_setting:
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public class FetchWord extends AsyncTask<String, Void, Word> {
 
         private static final String API_KEY = "33f1899bae9a7328fd0020ed3710587667a3c3fa92cade914";
         private String w;
+        private boolean last = false;
 
         @Override
         protected void onPreExecute() {
@@ -207,6 +245,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             String url = getAudioURL(strings[0]);
             Word word = null;
             w = strings[0];
+            if (strings.length > 1) last = true;
 
             boolean audio = downloadAudioFile(strings[0], url);
 
@@ -222,47 +261,59 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         @Override
         protected void onPostExecute(final Word word) {
             super.onPostExecute(word);
-            if (word == null) {
+            if ((word == null) || (!word.hasAudio() && !last)) {
                 Log.d("Word", "word null");
 
                 //tenta ver se palavra nao foi encontrada pq eh plural
                 //se for remove o s do final e tenta novamente
-                if ((w.length() > 1) && (w.charAt(w.length() - 1) == 's'))
-                    new FetchWord().execute(w.substring(0, w.length()-1));
-                else {
+                if ((!last) && (w.length() > 1) && (w.charAt(w.length() - 1) == 's')) {
+                    String[] s = new String[]{w.substring(0, w.length() - 1), "LAST"};
+                    new FetchWord().execute(s);
+                    return;
+                } else if ((!last) && (word != null)) {
+                    //nao eh plural, usar a palavra do jeito q esta
+                } else {
                     tvWord.setText("Word not found!");
                     tvWord.setVisibility(View.VISIBLE);
                     pbLoading.setVisibility(View.INVISIBLE);
+                    return;
                 }
-                return;
             }
 
             //Concatena silabas com espaco entre elas
             Pair<String[], Integer> hyphenation = word.getHyphenation();
             StringBuilder builderHyph = new StringBuilder();
-            builderHyph.append(hyphenation.first[0]);
             String sAux;
-            for (int i = 1; i < hyphenation.first.length; ++i) {
-                sAux = " · " + hyphenation.first[i];
-                builderHyph.append(sAux);
+            if(hyphenation!=null && hyphenation.first.length>0) {
+                builderHyph.append(hyphenation.first[0]);
+                for (int i = 1; i < hyphenation.first.length; ++i) {
+                    sAux = " · " + hyphenation.first[i];
+                    builderHyph.append(sAux);
+                }
+                tvWord.setText(builderHyph.toString());
             }
-
-            tvWord.setText(builderHyph.toString());
+            else{
+                tvWord.setText(getString(R.string.errHyphenationNotAvailable));
+            }
 
             //Concatenas todas as definicoes em 1 string
             ArrayList<Pair<String, String>> definitions = word.getDefinitions();
-            StringBuilder builderDef = new StringBuilder();
-            String type, def;
-            for (int i = 0; i < definitions.size(); ++i) {
-                type = definitions.get(i).first;
-                def = definitions.get(i).second;
-                sAux = (i+1)+". ("+type+")\n"+def+"\n";
-                builderDef.append(sAux);
+            if(definitions != null && definitions.size()>0){
+                StringBuilder builderDef = new StringBuilder();
+                String type, def;
+                for (int i = 0; i < definitions.size(); ++i) {
+                    type = definitions.get(i).first;
+                    def = definitions.get(i).second;
+                    sAux = (i+1)+". ("+type+")\n"+def+"\n";
+                    builderDef.append(sAux);
+                }
+                tvMeaning.setText(builderDef.toString());
+            }
+            else{
+                tvMeaning.setText(getString(R.string.errDefinitionNotAvailable));
             }
 
-            tvMeaning.setText(builderDef.toString());
-
-            if (word.haveAudio()) {
+            if (word.hasAudio()) {
                 btnPronunciation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -271,15 +322,16 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
                         mp.start();
                     }
                 });
+                btnPronunciation.setVisibility(View.VISIBLE);
             }
 
             //set visibilities after loading
             tvWord.setVisibility(View.VISIBLE);
             //tvPhonetics.setVisibility(View.VISIBLE);
             tvMeaning.setVisibility(View.VISIBLE);
-            btnPronunciation.setVisibility(View.VISIBLE);
             pbLoading.setVisibility(View.INVISIBLE);
             imgWordnik.setVisibility(View.VISIBLE);
+
         }
 
         private ArrayList<Pair <String, String>> getDefinitions(String word) {
@@ -441,10 +493,12 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
                     Log.d("FetchWord-audio", json);
                     return getAudioUrlJson(json);
                 } catch (IOException e) {
+                    Toast.makeText(getApplicationContext(), audioErrMsg, Toast.LENGTH_LONG);
                     Log.d("FetchWord-audio", "erro");
                     e.printStackTrace();
                 }
             } else {
+                Toast.makeText(getApplicationContext(), audioErrMsg, Toast.LENGTH_LONG);
                 Log.d("FetchWord-audio", "erro");
             }
 
@@ -516,6 +570,5 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             return false;
         }
     }
-
 
 }
