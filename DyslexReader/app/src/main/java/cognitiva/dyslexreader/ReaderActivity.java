@@ -208,6 +208,7 @@ public class ReaderActivity extends AppCompatActivity implements SharedPreferenc
         {
             //TODO: colocar o tema custom aqui
             MainActivity.setCustomTheme(preferences, this,
+                    getSupportActionBar(),
                     new View[]{constraintLayout},
                     new Button[] {btnPreviousWord, btnNextWord, btnAnalyzeWord, btnSettings},
                     new TextView[] {tvMainText});

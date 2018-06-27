@@ -164,6 +164,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         else
         {
             MainActivity.setCustomTheme(preferences, this,
+                    getSupportActionBar(),
                     new View[]{constraintLayout},
                     new Button[] {btnPronunciation},
                     new TextView[] {tvWord, tvMeaning, tvPhonetics});

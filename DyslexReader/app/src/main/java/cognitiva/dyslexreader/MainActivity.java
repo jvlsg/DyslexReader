@@ -6,14 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.StrictMode;
 import android.os.Debug;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -136,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         else
         {
             setCustomTheme(preferences, this,
+                    getSupportActionBar(),
                     new View[]{constraintLayout},
                     new Button[] {btnReader, btnFile, btnPaste, btnCamera, btnSettings},
                     new TextView[] {tvPreview});
@@ -152,12 +158,21 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
      * @param buttons Vetor com todos os botões que tem de ser customizados
      * @param textViews Vetor com todos as TextViews que tem de ser customizados
      */
-    public static void setCustomTheme(SharedPreferences preferences, Context context, View views[], Button buttons[], TextView textViews[]){
+    public static void setCustomTheme(SharedPreferences preferences, Context context, ActionBar actionBar, View views[], Button buttons[], TextView textViews[]){
 
         int customPrimaryText = preferences.getInt(context.getString(R.string.themeCustomPrimaryTextKey), R.color.colorTextPrimary_light);
         int customSecondaryText = preferences.getInt(context.getString(R.string.themeCustomSecondaryTextKey), R.color.colorTextPrimary_light);
         int customBackground = preferences.getInt(context.getString(R.string.themeCustomBackgroundKey), R.color.colorBackground_light);
         int customTextViewBackground = preferences.getInt(context.getString(R.string.themeCustomTextviewBackgroundKey), R.color.colorBackground_light);
+
+        if(actionBar != null){
+            System.out.println("NOTNULL");
+            SpannableString title = new SpannableString(context.getString(R.string.app_name));
+            title.setSpan(new ForegroundColorSpan(customPrimaryText), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            
+            actionBar.setTitle(title);
+            actionBar.setDisplayShowTitleEnabled(true);
+        }
 
         if(views != null) {
             for (int i = 0; i < views.length; i++) {
