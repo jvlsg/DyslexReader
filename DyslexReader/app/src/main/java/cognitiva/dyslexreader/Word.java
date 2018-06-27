@@ -9,11 +9,13 @@ public class Word {
     private String word;
     private Pair<String[], Integer> hyphenation;
     private ArrayList<Pair<String, String>> definitions;
+    private boolean audio;
 
-    public Word(String word, Pair<String[], Integer> hyphenation, ArrayList<Pair <String, String>> definitions) {
+    public Word(String word, Pair<String[], Integer> hyphenation, ArrayList<Pair <String, String>> definitions, boolean audio) {
         this.word = word;
         this.hyphenation = hyphenation;
         this.definitions = definitions;
+        this.audio = audio;
     }
 
     public static String removePunctuation(String w) {
@@ -49,5 +51,13 @@ public class Word {
 
     public void setDefinitions(ArrayList<Pair<String, String>> definitions) {
         this.definitions = definitions;
+    }
+
+    public boolean haveAudio() {
+        return audio;
+    }
+
+    public void setAudio(boolean audio) {
+        this.audio = audio;
     }
 }

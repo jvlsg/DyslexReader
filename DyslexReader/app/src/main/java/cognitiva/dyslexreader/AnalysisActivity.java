@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.content.SharedPreferences;
@@ -51,6 +52,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
     TextView tvPhonetics;
     Button btnPronunciation;
     ProgressBar pbLoading;
+    ImageView imgWordnik;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         tvPhonetics = findViewById(R.id.tvPhonetics);
         btnPronunciation = findViewById(R.id.btnPronunciation);
         pbLoading = findViewById(R.id.pbLoadingAnalysis);
+        imgWordnik = findViewById(R.id.imgWordnik);
 
         setBackground();
 
@@ -193,6 +196,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             tvMeaning.setVisibility(View.INVISIBLE);
             btnPronunciation.setVisibility(View.INVISIBLE);
             pbLoading.setVisibility(View.VISIBLE);
+            imgWordnik.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -204,11 +208,12 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             Word word = null;
             w = strings[0];
 
+            boolean audio = downloadAudioFile(strings[0], url);
+
             if ((url != null)
-                    && (downloadAudioFile(strings[0], url))
                     && (definitions != null)
                     && (hyphenation != null)) {
-                word = new Word(strings[0].toLowerCase(), hyphenation, definitions);
+                word = new Word(strings[0].toLowerCase(), hyphenation, definitions, audio);
             }
 
             return word;
@@ -222,7 +227,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
 
                 //tenta ver se palavra nao foi encontrada pq eh plural
                 //se for remove o s do final e tenta novamente
-                if (w.charAt(w.length() - 1) == 's')
+                if ((w.length() > 1) && (w.charAt(w.length() - 1) == 's'))
                     new FetchWord().execute(w.substring(0, w.length()-1));
                 else {
                     tvWord.setText("Word not found!");
@@ -257,14 +262,16 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
 
             tvMeaning.setText(builderDef.toString());
 
-            btnPronunciation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MediaPlayer mp = MediaPlayer.create(v.getContext(), Uri.parse(Environment.getExternalStorageDirectory().getPath()+ "/dictionary/"+word.getWord()+".mp3"));
-                    mp.setLooping(false);
-                    mp.start();
-                }
-            });
+            if (word.haveAudio()) {
+                btnPronunciation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MediaPlayer mp = MediaPlayer.create(v.getContext(), Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/dictionary/" + word.getWord() + ".mp3"));
+                        mp.setLooping(false);
+                        mp.start();
+                    }
+                });
+            }
 
             //set visibilities after loading
             tvWord.setVisibility(View.VISIBLE);
@@ -272,6 +279,7 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
             tvMeaning.setVisibility(View.VISIBLE);
             btnPronunciation.setVisibility(View.VISIBLE);
             pbLoading.setVisibility(View.INVISIBLE);
+            imgWordnik.setVisibility(View.VISIBLE);
         }
 
         private ArrayList<Pair <String, String>> getDefinitions(String word) {
