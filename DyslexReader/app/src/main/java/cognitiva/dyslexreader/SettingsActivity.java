@@ -2,6 +2,7 @@ package cognitiva.dyslexreader;
 
 import android.content.SharedPreferences;
 import android.preference.SwitchPreference;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
 
 
+
     //TODO: HOLDTIME
 
     @Override
@@ -23,6 +25,8 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         super.onCreate(savedInstanceState);
         setTheme(loadTheme());
         setContentView(R.layout.activity_settings);
+
+
 
 
         /**

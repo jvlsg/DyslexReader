@@ -83,6 +83,11 @@ public class AnalysisActivity extends AppCompatActivity implements SharedPrefere
         pbLoading = findViewById(R.id.pbLoadingAnalysis);
         imgWordnik = findViewById(R.id.imgWordnik);
 
+        MainActivity.setFont(tvWord);
+        MainActivity.setFont(tvMeaning);
+        MainActivity.setFont(tvPhonetics);
+        MainActivity.setFont(btnPronunciation);
+
         audioErrMsg = getResources().getString(R.string.errAudioNotAvailable);
         constraintLayout = (ConstraintLayout) findViewById(R.id.analyzeConstraintLayout);
 
