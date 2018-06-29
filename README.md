@@ -14,6 +14,7 @@ O projeto foi feito para a disciplina SCC0225 - Laboratório de desenvolvimento 
 * White noise - melhora a concentração em ambientes barulhentos (ON/OFF)
 * Diferencia primeira e ultima letra da palavra atual (ON/OFF)
 * Seleção de tema e customização das cores
+  * Feito utilizando [Spectrum](https://github.com/the-blue-alliance/spectrum)
 * Tempo de atraso que o botão play deve ser pressionado para que as palavras avancem automaticamente (décimos de segundos)
 
 ## Modos de leitura
