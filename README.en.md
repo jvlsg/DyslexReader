@@ -14,6 +14,7 @@ Project made for SCC0225 - Laboratório de desenvolvimento de aplicações para 
 * White noise - improve concentration in noisy enviroments (ON/OFF)
 * Different colors for first and last letter of current word (ON/OFF)
 * Select theme and custom colors
+  *Using [Spectrum](https://github.com/the-blue-alliance/spectrum)
 * Delay for play button to go to next word automatically when pressed (tenths of seconds)
 
 ## Reading modes
